@@ -32,7 +32,7 @@ The fundamental unit of measurement is the **yard**. The global world is partiti
 
 ### Coordinate Mapping Formulas
 
-The mapping between tile indices $(I_x, I_y)$ and world coordinates $(W_x, W_y)$ is defined by the following linear formulas:
+The mapping between tile indices (Iₓ, Iᵧ) and world coordinates (Wₓ, Wᵧ) is defined by the following linear formulas:
 
 ```text
 Wₓ = (32 − Iₓ) × 533.33333
