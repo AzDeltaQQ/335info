@@ -1,6 +1,6 @@
 # Technical Specifications and Binary Internals of the World of Warcraft: Wrath of the Lich King Engine Assets
 
-The digital architecture of **World of Warcraft: Wrath of the Lich King** (build 3.3.5a, version 12340) represents a sophisticated culmination of early-2000s graphics engineering, balancing the constraints of limited video memory with the requirements of a vast, seamless open world. 
+The digital architecture of **World of Warcraft: Wrath of the Lich King** (build 3.3.5a, version 12340) represents a sophisticated culmination of early-2000s graphics engineering, balancing the constraints of limited video memory with the requirements of a vast, seamless open world.
 
 Understanding these internals is essential for modern engine developers seeking to build custom parsers or generative pipelines. The system is built upon the **MoPaQ (MPQ)** container, which houses terrain (`ADT`/`WDT`), large static geometry (`WMO`), dynamic skeletal models (`M2`/`SKIN`), and high-performance textures (`BLP`). This investigation provides an exhaustive technical analysis of these formats, their sub-chunks, and the mathematical foundations of their coordinate systems.
 
@@ -16,7 +16,7 @@ Precision in coordinate transformation is the prerequisite for any implementatio
 
 This orientation is consistent across the global map and local model space, though pivot conventions vary depending on the asset type.
 
-The fundamental unit of measurement is the **yard**. The global world is partitioned into a 64x64 grid of tiles, designated as ADT blocks. Each tile measures exactly 1600 feet, or 533.3333 yards. Consequently, the entire map span is 34,133.33312 yards. The coordinate origin $(0, 0, 0)$ is situated at the geographic center of the map, meaning that the maximum and minimum world coordinates are $\pm 17,066.66656$ yards.
+The fundamental unit of measurement is the **yard**. The global world is partitioned into a 64×64 grid of tiles, designated as ADT blocks. Each tile measures exactly 1600 feet, or 533.3333 yards. Consequently, the entire map span is 34,133.33312 yards. The coordinate origin (0, 0, 0) is situated at the geographic center of the map, meaning that the maximum and minimum world coordinates are ±17,066.66656 yards.
 
 > **Note:** A common error in external tools is the inversion of the Y-axis; it must be remembered that moving "Right" in the game world (facing North) corresponds to decreasing Y-values.
 
@@ -39,7 +39,7 @@ Wₓ = (32 − Iₓ) × 533.33333
 Wᵧ = (32 − Iᵧ) × 533.33333
 ```
 
-For individual MCNK chunks within a tile (where chunk indices $C_x, C_y$ range from 0 to 15), the local offset is:
+For individual MCNK chunks within a tile (where chunk indices Cₓ, Cᵧ range from 0 to 15), the local offset is:
 
 ```text
 Oₓ = Cₓ × 33.33333
@@ -64,7 +64,7 @@ Archives can be embedded within other files, such as executables. The client sea
 | `0x04` | `uint32` | `HeaderSize` | Size of the header (at least 0x20) |
 | `0x08` | `uint32` | `ArchiveSize` | Total size of the archive |
 | `0x0C` | `uint16` | `FormatVersion` | 0 for original, 1 for Burning Crusade/Wrath |
-| `0x10` | `uint16` | `BlockSize` | Power of two for sector size ($512 \times 2^{BlockSize}$) |
+| `0x10` | `uint16` | `BlockSize` | Power of two for sector size (512 × 2ᴮˡᵒᶜᵏˢⁱᶻᵉ) |
 | `0x12` | `uint32` | `HashTablePos` | Offset to the Hash Table |
 | `0x14` | `uint32` | `BlockTablePos` | Offset to the Block Table |
 | `0x18` | `uint32` | `HashTableSize` | Number of entries (must be power of 2) |
@@ -79,7 +79,7 @@ The encryption of files within an MPQ is a bitwise XOR stream cipher where the k
 
 ## Terrain Systems: WDT and ADT Specifications
 
-World maps are defined by a **World Definition Table (WDT)** and a series of **Area Data Tables (ADT)**. The WDT specifies which tiles are present in the 64x64 world grid. For maps without terrain (such as dungeons), the WDT can reference a global World Map Object (WMO).
+World maps are defined by a **World Definition Table (WDT)** and a series of **Area Data Tables (ADT)**. The WDT specifies which tiles are present in the 64×64 world grid. For maps without terrain (such as dungeons), the WDT can reference a global World Map Object (WMO).
 
 ### ADT Chunk Layout
 The ADT format is strictly chunk-based. In build 3.3.5a, all terrain data resides in a single ADT file, unlike later expansions where it is split into root, texture, and object files.
@@ -103,23 +103,23 @@ Each ADT tile contains 256 `MCNK` chunks, each representing a 33.3333-yard cell.
 | `0x04` | `int` | `IndexX` | X-index (0-15) |
 | `0x08` | `int` | `IndexY` | Y-index (0-15) |
 | `0x0C` | `uint32` | `nLayers` | Number of texture layers (max 4 in 3.3.5a) |
-| `0x10` | `uint16` | `Holes` | 16-bit hole mask for 8x8 units |
+| `0x10` | `uint16` | `Holes` | 16-bit hole mask for 8×8 units |
 | `0x1C` | `uint32` | `nDoodadRefs` | Number of M2 objects in this chunk |
 | `0x60` | `uint32` | `areaId` | Reference to AreaTable.dbc |
 
-The **Holes** field is a 16-bit bitmask that controls terrain visibility. In 3.3.5a, these 16 bits are mapped row-wise to a 4x4 grid of "sub-chunks." Each bit corresponds to a 2x2 area of the 8x8 terrain units. Setting a bit to 1 prevents the engine from rendering that part of the mesh, allowing for cave entrances or cellar cutouts.
+The **Holes** field is a 16-bit bitmask that controls terrain visibility. In 3.3.5a, these 16 bits are mapped row-wise to a 4×4 grid of "sub-chunks." Each bit corresponds to a 2×2 area of the 8×8 terrain units. Setting a bit to 1 prevents the engine from rendering that part of the mesh, allowing for cave entrances or cellar cutouts.
 
 ### Heightmap Encoding (MCVT)
-The terrain grid in an MCNK consists of an interleaved set of vertices: an "outer" 9x9 grid and an "inner" 8x8 grid, for a total of 145 float values. The outer grid points are sampled at the corners of the 8x8 units, while the inner grid points are at the centers of the units. This configuration enables the engine to render terrain with a higher level of surface detail than a simple 9x9 grid would allow.
+The terrain grid in an MCNK consists of an interleaved set of vertices: an "outer" 9×9 grid and an "inner" 8×8 grid, for a total of 145 float values. The outer grid points are sampled at the corners of the 8×8 units, while the inner grid points are at the centers of the units. This configuration enables the engine to render terrain with a higher level of surface detail than a simple 9×9 grid would allow.
 
-The height values are relative to the Z-coordinate specified in the MCNK header. To calculate the absolute world height $H_{abs}$ of a vertex $v$:
+The height values are relative to the Z-coordinate specified in the MCNK header. To calculate the absolute world height H_abs of a vertex v:
 
-$$ H_{abs} = Z_{mcnk} + H_{mcvt}[v] $$
+**H_abs = Z_mcnk + H_mcvt[v]**
 
 ### Texture Layering and Alpha Packing (MCLY and MCAL)
 Texture blending is handled by the `MCLY` and `MCAL` chunks. `MCLY` defines which textures from the `MTEX` list are applied and their properties. `MCAL` contains the alpha maps.
 
-In build 3.3.5a, the MCAL alpha map is typically 64x64 pixels. The engine supports two main encodings for these maps to save memory:
+In build 3.3.5a, the MCAL alpha map is typically 64×64 pixels. The engine supports two main encodings for these maps to save memory:
 1.  **Uncompressed:** 4096-byte format (8 bits per pixel).
 2.  **Compressed:** 2048-byte format (4 bits per pixel) or a compressed RLE-style format used when the `alpha_map_compressed` flag (`0x200`) is set.
 
@@ -168,7 +168,7 @@ Group files contain the actual geometry. To optimize collision detection and cam
     *   **negChild / posChild:** Indices to child nodes or the face list in MOBR.
 *   **MOBR**: A list of `uint16` indices that map leaf nodes to the triangles in the `MOVI` chunk.
 
-This architecture enables $O(\log N)$ collision lookups, which is essential for maintaining high frame rates in dense environments like Dalaran.
+This architecture enables O(log N) collision lookups, which is essential for maintaining high frame rates in dense environments like Dalaran.
 
 ---
 
@@ -196,7 +196,7 @@ The **M2Vertex** structure is optimized for hardware skinning:
 
 For a vertex to deform correctly, the bone weights must be normalized such that:
 
-$$ \sum_{i=1}^{4} \text{Weight}_i = 255 $$
+**∑ᵢ₌₁⁴ Weightᵢ = 255**
 
 ### Skeletal Animation Blocks
 Animation data in M2 is stored in `M2Track` blocks. In build 3.3.5a, the system shifted from start/end frames to explicit durations in milliseconds. The engine supports three interpolation types:
@@ -204,13 +204,13 @@ Animation data in M2 is stored in `M2Track` blocks. In build 3.3.5a, the system 
 2.  **Linear (1):** Standard lerp.
 3.  **Hermite (2):** Cubic spline interpolation using tangents for smooth movement.
 
-For Hermite tracks, each keyframe provides a value $P$, an "in" tangent $T_{in}$, and an "out" tangent $T_{out}$. The interpolation is calculated using the Hermite basis functions over the normalized time $s$:
+For Hermite tracks, each keyframe provides a value P, an "in" tangent Tᵢₙ, and an "out" tangent Tₒᵤₜ. The interpolation is calculated using the Hermite basis functions over the normalized time s:
 
-$$ h_1(s) = 2s^3 - 3s^2 + 1 $$
-$$ h_2(s) = -2s^3 + 3s^2 $$
-$$ h_3(s) = s^3 - 2s^2 + s $$
-$$ h_4(s) = s^3 - s^2 $$
-$$ \text{Result} = h_1(s)P_i + h_2(s)P_{i+1} + h_3(s)T_{out,i} + h_4(s)T_{in,i+1} $$
+h₁(s) = 2s³ − 3s² + 1
+h₂(s) = −2s³ + 3s²
+h₃(s) = s³ − 2s² + s
+h₄(s) = s³ − s²
+Result = h₁(s)Pᵢ + h₂(s)Pᵢ₊₁ + h₃(s)Tₒᵤₜ,ᵢ + h₄(s)Tᵢₙ,ᵢ₊₁
 
 ### SKIN Profiles and Bone Remapping
 The `.skin` files (named `Model00.skin` through `Model03.skin` for LOD levels) contain the submesh and index data.
@@ -243,10 +243,10 @@ The **BLP** format is optimized for direct uploading to GPU memory, primarily ut
 ### DXT Compression and Size Correction
 In the 3.3.5a client, some mipmap sizes stored in the BLP header for compressed textures are technically incorrect. Custom parsers must recalculate the expected size to avoid buffer underflows. The valid size for a DXT mipmap is:
 
-$$ \text{Blocks}_x = \frac{\text{Width} + 3}{4} $$
-$$ \text{Blocks}_y = \frac{\text{Height} + 3}{4} $$
-$$ \text{Size}_{DXT1} = \text{Blocks}_x \times \text{Blocks}_y \times 8 $$
-$$ \text{Size}_{DXT3/5} = \text{Blocks}_x \times \text{Blocks}_y \times 16 $$
+Blocksₓ = (Width + 3) / 4
+Blocksᵧ = (Height + 3) / 4
+SizeDₓₜ₁ = Blocksₓ × Blocksᵧ × 8
+SizeDₓₜ₃/₅ = Blocksₓ × Blocksᵧ × 16
 
 For uncompressed, palettized textures, the header is followed by a 256-entry BGRA palette (1024 bytes). The image data follows, where each byte is an index into the palette. Alpha data, if present, is appended after the index data for each mipmap level.
 
@@ -273,8 +273,8 @@ Records do not store strings directly; instead, they store a 4-byte offset into 
 Building assets for the 3.3.5a engine requires a precise sequence of operations to maintain compatibility with the client's internal validation.
 
 ### Terrain Generation (ADT)
-1.  **Heightmap Processing:** A 128x128 grayscale heightmap (representing the 16x16 chunks with 8x8 units each) is mapped to the float values of the `MCVT` chunks.
-2.  **Normal Calculation:** Terrain normals in `MCNR` are 3-byte signed vectors. For each vertex $V$, the normal $N$ is the average of the face normals of the surrounding quads.
+1.  **Heightmap Processing:** A 128×128 grayscale heightmap (representing the 16×16 chunks with 8×8 units each) is mapped to the float values of the `MCVT` chunks.
+2.  **Normal Calculation:** Terrain normals in `MCNR` are 3-byte signed vectors. For each vertex V, the normal N is the average of the face normals of the surrounding quads.
 3.  **Alpha Layering:** To generate the `MCAL` alpha maps, the developer must determine the blend weight of each of the 4 texture layers. If more than 4 textures are required, the terrain must be split into separate chunks or the textures must be pre-composited.
 4.  **Hole Creation:** To create a hole, the 16-bit mask in the `MCNK` header must be updated. This bitmask is crucial for pathfinding and collision, as the client's physics engine respects holes even if the geometry is technically present.
 
@@ -285,7 +285,7 @@ Building assets for the 3.3.5a engine requires a precise sequence of operations 
 4.  **Bounding Volumes:** The `CAaBox` and sphere radius in the M2 header must be accurately calculated. If the bounding box is too small, the model will flicker or disappear when viewed at certain angles due to frustum culling.
 
 ### Texture Pipeline (BLP)
-1.  **Mipmap Generation:** Textures must have a full mipmap chain down to 1x1.
+1.  **Mipmap Generation:** Textures must have a full mipmap chain down to 1×1.
 2.  **DXT Selection:** Use DXT1 for simple textures to save space. Use DXT3 for textures with sharp alpha transitions (like foliage) and DXT5 for smooth alpha gradients (like smoke).
 3.  **Power of Two:** All textures must have dimensions that are powers of two (e.g., 256, 512, 1024).
 
@@ -302,8 +302,8 @@ The 3.3.5a engine is governed by several hardcoded limits that reflect the techn
 | **ADT Layers** | 4 | Max number of blended textures per terrain chunk. |
 | **WMO Groups** | 512 | Maximum number of group files per root WMO. |
 | **MPQ Archive Size** | 4 GB | Limit for the standard 32-bit archive size field. |
-| **ADT Tile Count** | 4096 | The fixed 64x64 grid layout. |
-| **MCNK Units** | 8x8 | Fixed grid density for terrain heightmap subdivisions. |
+| **ADT Tile Count** | 4096 | The fixed 64×64 grid layout. |
+| **MCNK Units** | 8×8 | Fixed grid density for terrain heightmap subdivisions. |
 
 ---
 
@@ -311,7 +311,7 @@ The 3.3.5a engine is governed by several hardcoded limits that reflect the techn
 
 The reverse engineering of the 3.3.5a client is well-documented through several key community projects. **StormLib** remains the gold standard for MPQ interaction, supporting all encryption and hashing requirements. For model viewing and export, **WoW Model Viewer** provides a robust reference implementation of the M2 and SKIN formats. Terrain editors such as **Noggit** have successfully reverse-engineered the ADT and WDT structures to allow for world editing.
 
-For developers building new tools, the primary edge case discovered in practice is the handling of **WDT-less maps**. Some small instances and battlegrounds do not use the 64x64 ADT grid but instead rely on a single global WMO placed at the origin. In these cases, the WDT file contains an `MWMO` chunk and a single `MODF` entry for the global structure.
+For developers building new tools, the primary edge case discovered in practice is the handling of **WDT-less maps**. Some small instances and battlegrounds do not use the 64×64 ADT grid but instead rely on a single global WMO placed at the origin. In these cases, the WDT file contains an `MWMO` chunk and a single `MODF` entry for the global structure.
 
 Furthermore, the transition to Cataclysm (build 4.0.1+) introduced the splitting of ADT files into `_root.adt`, `_obj0.adt`, and `_tex0.adt`. Developers working strictly with 3.3.5a must ensure they do not accidentally adopt these later conventions, as the 3.3.5a client is incapable of processing the multi-file ADT structure.
 
