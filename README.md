@@ -34,8 +34,13 @@ The fundamental unit of measurement is the **yard**. The global world is partiti
 
 The mapping between tile indices $(I_x, I_y)$ and world coordinates $(W_x, W_y)$ is defined by the following linear formulas:
 
-$$ W_x = (32 - I_x) \times 533.33333 $$
-$$ W_y = (32 - I_y) \times 533.33333 $$
+```text
+Wₓ = (32 − Iₓ) × 533.33333
+Wᵧ = (32 − Iᵧ) × 533.33333
+
+Oₓ = Cₓ × 33.33333
+Oᵧ = Cᵧ × 33.33333
+```
 
 For individual MCNK chunks within a tile (where chunk indices $C_x, C_y$ range from 0 to 15), the local offset is:
 
