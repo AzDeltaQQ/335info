@@ -41,8 +41,10 @@ Wᵧ = (32 − Iᵧ) × 533.33333
 
 For individual MCNK chunks within a tile (where chunk indices $C_x, C_y$ range from 0 to 15), the local offset is:
 
-$$ O_x = C_x \times 33.33333 $$
-$$ O_y = C_y \times 33.33333 $$
+```text
+Oₓ = Cₓ × 33.33333
+Oᵧ = Cᵧ × 33.33333
+```
 
 ### Time Representation
 Time in the engine is also numerically represented. The client handles time through a float value ranging from **0 to 1** from the Alpha through Cataclysm, where `0.5` represents midday and `0.0` represents dawn. In build 3.3.5a, the memory offsets for time values are critical for synchronizing environmental lighting and scripted events.
