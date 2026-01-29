@@ -1,6 +1,6 @@
 # Technical Specifications and Binary Internals of the World of Warcraft: Wrath of the Lich King Engine Assets
 
-The digital architecture of **World of Warcraft: Wrath of the Lich King** (build 3.3.5a, version 12340) represents a sophisticated culmination of early-2000s graphics engineering, balancing the constraints of limited video memory with the requirements of a vast, seamless open world. At the heart of this system lies a proprietary suite of binary file formats designed for rapid streaming from high-compression archives.
+The digital architecture of **World of Warcraft: Wrath of the Lich King** (build 3.3.5a, version 12340) represents a sophisticated culmination of early-2000s graphics engineering, balancing the constraints of limited video memory with the requirements of a vast, seamless open world. 
 
 Understanding these internals is essential for modern engine developers seeking to build custom parsers or generative pipelines. The system is built upon the **MoPaQ (MPQ)** container, which houses terrain (`ADT`/`WDT`), large static geometry (`WMO`), dynamic skeletal models (`M2`/`SKIN`), and high-performance textures (`BLP`). This investigation provides an exhaustive technical analysis of these formats, their sub-chunks, and the mathematical foundations of their coordinate systems.
 
