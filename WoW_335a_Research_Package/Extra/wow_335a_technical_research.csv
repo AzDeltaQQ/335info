@@ -1,0 +1,2578 @@
+Subject,Research Topic,Summary,Struct Definitions,Constants and Flags,Relationships,Related Tools,Code Examples,Sources,Detailed Findings File,Error
+"DBC Files Complete Reference - Research ALL DBC file structures for WoW 3.3.5a including: complete list of all 200+ DBC files, their field structures, data types, relationships between DBCs, string references, and how they connect to game systems. Include SpellDBC, ItemDBC, CreatureDisplayInfoDBC, CharSectionsDBC, etc.",DBC Files Complete Reference for WoW 3.3.5a,"DBC (DataBaseClient) files are the primary format for storing game data on the World of Warcraft 3.3.5a client. This research provides a comprehensive overview of the DBC file structure, including the header, record data, and string blocks. It also includes a complete list of all DBC files, detailed structure definitions for key files like Spell.dbc, Item.dbc, CreatureDisplayInfo.dbc, and CharSections.dbc, and information on their relationships with other game systems.","```c
+struct SpellEntry {
+    uint32_t  ID;                                           // 0
+    uint32_t  Category;                                     // 1 SpellCategory.dbc
+    uint32_t  DispelType;                                   // 2 SpellDispelType.dbc
+    uint32_t  Mechanic;                                     // 3 SpellMechanic.dbc
+    uint32_t  Attributes;                                   // 4
+    uint32_t  AttributesEx;                                 // 5
+    uint32_t  AttributesExB;                                // 6
+    uint32_t  AttributesExC;                                // 7
+    uint32_t  AttributesExD;                                // 8
+    uint32_t  AttributesExE;                                // 9
+    uint32_t  AttributesExF;                                // 10
+    uint32_t  AttributesExG;                                // 11
+    uint32_t  ShapeshiftMask[2];                            // 12-13 SpellShapeshiftForm.dbc
+    uint32_t  ShapeshiftExclude[2];                         // 14-15 SpellShapeshiftForm.dbc
+    uint32_t  Targets;                                      // 16
+    uint32_t  TargetCreatureType;                           // 17 CreatureType.dbc
+    uint32_t  RequiresSpellFocus;                           // 18 SpellFocusObject.dbc
+    uint32_t  FacingCasterFlags;                            // 19
+    uint32_t  CasterAuraState;                              // 20
+    uint32_t  TargetAuraState;                              // 21
+    uint32_t  ExcludeCasterAuraState;                       // 22
+    uint32_t  ExcludeTargetAuraState;                       // 23
+    uint32_t  CasterAuraSpell;                              // 24 Spell.dbc
+    uint32_t  TargetAuraSpell;                              // 25 Spell.dbc
+    uint32_t  ExcludeCasterAuraSpell;                       // 26 Spell.dbc
+    uint32_t  ExcludeTargetAuraSpell;                       // 27 Spell.dbc
+    uint32_t  CastingTimeIndex;                             // 28 SpellCastTimes.dbc
+    uint32_t  RecoveryTime;                                   // 29
+    uint32_t  CategoryRecoveryTime;                         // 30
+    uint32_t  InterruptFlags;                               // 31
+    uint32_t  AuraInterruptFlags;                           // 32
+    uint32_t  ChannelInterruptFlags;                        // 33
+    uint32_t  ProcTypeMask;                                 // 34
+    uint32_t  ProcChance;                                   // 35
+    uint32_t  ProcCharges;                                  // 36
+    uint32_t  MaxLevel;                                     // 37
+    uint32_t  BaseLevel;                                    // 38
+    uint32_t  SpellLevel;                                   // 39
+    uint32_t  DurationIndex;                                // 40 SpellDuration.dbc
+    int32_t   PowerType;                                    // 41
+    uint32_t  ManaCost;                                     // 42
+    uint32_t  ManaCostPerLevel;                             // 43
+    uint32_t  ManaPerSecond;                                // 44
+    uint32_t  ManaPerSecondPerLevel;                        // 45
+    uint32_t  RangeIndex;                                   // 46 SpellRange.dbc
+    float     Speed;                                        // 47
+    uint32_t  ModalNextSpell;                               // 48 Spell.dbc
+    uint32_t  CumulativeAura;                               // 49
+    uint32_t  Totem[2];                                     // 50-51 Item.dbc
+    int32_t   Reagent[8];                                   // 52-59 Item.dbc
+    uint32_t  ReagentCount[8];                              // 60-67
+    int32_t   EquippedItemClass;                            // 68 ItemClass.dbc
+    int32_t   EquippedItemSubclass;                         // 69 ItemSubClass.dbc
+    int32_t   EquippedItemInvTypes;                         // 70
+    uint32_t  Effect[3];                                    // 71-73
+    int32_t   EffectDieSides[3];                            // 74-76
+    float     EffectRealPointsPerLevel[3];                  // 77-79
+    int32_t   EffectBasePoints[3];                          // 80-82
+    uint32_t  EffectMechanic[3];                            // 83-85 SpellMechanic.dbc
+    uint32_t  EffectImplicitTargetA[3];                     // 86-88
+    uint32_t  EffectImplicitTargetB[3];                     // 89-91
+    uint32_t  EffectRadiusIndex[3];                         // 92-94 SpellRadius.dbc
+    uint32_t  EffectAura[3];                                // 95-97
+    uint32_t  EffectAuraPeriod[3];                          // 98-100
+    float     EffectAmplitude[3];                           // 101-103
+    uint32_t  EffectChainTargets[3];                        // 104-106
+    uint32_t  EffectItemType[3];                            // 107-109 Item.dbc
+    int32_t   EffectMiscValue[3];                           // 110-112
+    int32_t   EffectMiscValueB[3];                          // 113-115
+    int32_t   EffectTriggerSpell[3];                        // 116-118 Spell.dbc
+    float     EffectPointsPerCombo[3];                      // 119-121
+    uint32_t  EffectSpellClassMask_A[3];                    // 122-124
+    uint32_t  EffectSpellClassMask_B[3];                    // 125-127
+    uint32_t  EffectSpellClassMask_C[3];                    // 128-130
+    uint32_t  SpellVisualID[2];                             // 131-132 SpellVisual.dbc
+    uint32_t  SpellIconID;                                  // 133 SpellIcon.dbc
+    uint32_t  ActiveIconID;                                 // 134 SpellIcon.dbc
+    uint32_t  SpellPriority;                                // 135
+    char*     Name[16];                                     // 136-151
+    uint32_t  Name_lang_mask;                               // 152
+    char*     NameSubtext[16];                              // 153-168
+    uint32_t  NameSubtext_lang_mask;                        // 169
+    char*     Description[16];                              // 170-185
+    uint32_t  Description_lang_mask;                        // 186
+    char*     AuraDescription[16];                          // 187-202
+    uint32_t  AuraDescription_lang_mask;                    // 203
+    uint32_t  ManaCostPct;                                  // 204
+    uint32_t  StartRecoveryCategory;                        // 205 SpellCategory.dbc
+    uint32_t  StartRecoveryTime;                            // 206
+    uint32_t  MaxTargetLevel;                               // 207
+    uint32_t  SpellClassSet;                                // 208
+    uint32_t  SpellClassMask[3];                            // 209-211
+    uint32_t  MaxTargets;                                   // 212
+    uint32_t  DefenseType;                                  // 213
+    uint32_t  PreventionType;                               // 214
+    int32_t   StanceBarOrder;                               // 215
+    float     EffectChainAmplitude[3];                      // 216-218
+    uint32_t  MinFactionID;                                 // 219 Faction.dbc
+    uint32_t  MinReputation;                                // 220
+    uint32_t  RequiredAuraVision;                           // 221
+    uint32_t  RequiredTotemCategoryID[2];                   // 222-223 TotemCategory.dbc
+    int32_t   RequiredAreasID;                              // 224 AreaTable.dbc
+    uint32_t  SchoolMask;                                   // 225
+    uint32_t  RuneCostID;                                   // 226 SpellRuneCost.dbc
+    uint32_t  SpellMissileID;                               // 227 SpellMissile.dbc
+    int32_t   PowerDisplayID;                               // 228 PowerDisplay.dbc
+    float     EffectBonusCoefficient[3];                    // 229-231
+    int32_t   DescriptionVariablesID;                       // 232 SpellDescriptionVariables.dbc
+    uint32_t  Difficulty;                                   // 233 SpellDifficulty.dbc
+};
+```
+
+```c
+struct ItemEntry {
+    uint32_t  ID;                                           // 0
+    uint32_t  ClassID;                                      // 1 ItemClass.dbc
+    uint32_t  SubclassID;                                   // 2 ItemSubClass.dbc
+    int32_t   SoundOverrideSubclassID;                      // 3
+    int32_t   Material;                                     // 4 Material.dbc
+    uint32_t  DisplayInfoID;                                // 5 ItemDisplayInfo.dbc
+    uint32_t  InventoryType;                                // 6
+    uint32_t  SheatheType;                                  // 7
+};
+```
+
+```c
+struct CreatureDisplayInfoEntry {
+    uint32_t  ID;                                           // 0
+    uint32_t  ModelID;                                      // 1 CreatureModelData.dbc
+    uint32_t  SoundID;                                      // 2 CreatureSoundData.dbc
+    uint32_t  ExtendedDisplayInfoID;                        // 3 CreatureDisplayInfoExtra.dbc
+    float     CreatureModelScale;                           // 4
+    uint32_t  CreatureModelAlpha;                           // 5
+    char*     TextureVariation[3];                          // 6-8
+    char*     PortraitTextureName;                          // 9
+    uint32_t  SizeClass;                                    // 10
+    uint32_t  BloodID;                                      // 11 UnitBloodLevels.dbc
+    uint32_t  NPCSoundID;                                   // 12 NPCSounds.dbc
+    uint32_t  ParticleColorID;                              // 13 ParticleColor.dbc
+    uint32_t  CreatureGeosetData;                           // 14
+    uint32_t  ObjectEffectPackageID;                        // 15 ObjectEffectPackage.dbc
+};
+```
+
+```c
+struct CharSectionsEntry {
+    uint32_t  ID;                                           // 0
+    uint32_t  RaceID;                                       // 1 ChrRaces.dbc
+    uint32_t  SexID;                                        // 2
+    uint32_t  BaseSection;                                  // 3
+    char*     TextureName[3];                               // 4-6
+    uint32_t  Flags;                                        // 7
+    uint32_t  VariationIndex;                               // 8
+    uint32_t  ColorIndex;                                   // 9
+};
+```","### Spell Attributes (Attributes, AttributesEx, etc.)
+
+These fields are bitmasks that define a spell's behavior.
+
+*   `SPELL_ATTR0_UNK1`: Unknown attribute 1
+*   `SPELL_ATTR0_ON_NEXT_SWING`: On next swing
+*   `SPELL_ATTR0_IS_REPLENISHMENT`: Is replenishment
+*   `SPELL_ATTR0_ABILITY`: Ability
+*   `SPELL_ATTR0_TRADESPELL`: Trade spell
+*   `SPELL_ATTR0_PASSIVE`: Passive
+
+### DispelType
+
+| ID | Name                |
+|----|---------------------|
+| 0  | DISPEL_NONE         |
+| 1  | DISPEL_MAGIC        |
+| 2  | DISPEL_CURSE        |
+| 3  | DISPEL_DISEASE      |
+| 4  | DISPEL_POISON       |
+| 5  | DISPEL_STEALTH      |
+| 6  | DISPEL_INVISIBILITY |
+| 7  | DISPEL_ALL          |
+| 8  | DISPEL_SPE_NPC_ONLY |
+| 9  | DISPEL_ENRAGE       |
+| 10 | DISPEL_ZG_TICKET    |
+| 11 | DESPEL_OLD_UNUSED   |
+
+### Mechanic
+
+| ID | Name                   |
+|----|------------------------|
+| 0  | MECHANIC_NONE          |
+| 1  | MECHANIC_CHARM         |
+| 2  | MECHANIC_DISORIENTED   |
+| 3  | MECHANIC_DISARM        |
+| 4  | MECHANIC_DISTRACT      |
+| 5  | MECHANIC_FEAR          |","*   **Server-side Databases:** While DBC files are client-side, they often mirror or are supplemented by server-side database tables (e.g., `creature_template`, `item_template`). The server is the ultimate authority on game state.
+*   **M2 and WMO Models:** DBC files like `CreatureDisplayInfo.dbc` and `GameObjectDisplayInfo.dbc` reference M2 (model) files that define the visual appearance of creatures and game objects.
+*   **Game Logic:** The game client's executable contains the logic that reads and interprets the data in the DBC files to display the world, handle spell effects, and manage other game systems.
+*   **UI (Interface):** The user interface, defined in XML and Lua, often queries DBC data to display information to the player (e.g., item stats, spell descriptions).","*   **WDBX Editor:** A popular and powerful DBC editor that supports various WoW versions, including 3.3.5a. It allows for easy viewing, editing, and exporting of DBC data.
+*   **DBC Viewer/Editor:** A generic term for several tools that provide basic viewing and editing capabilities for DBC files.
+*   **TrinityCore DBC Tools:** The TrinityCore project includes various tools and scripts for working with DBC files, often used in the context of server development.
+*   **wow_dbc (Rust library):** A Rust library for reading and writing DBC files for various WoW versions.","```c
+struct dbc_header
+{
+  uint32_t magic; // always 'WDBC'
+  uint32_t record_count; // records per file
+  uint32_t field_count; // fields per record
+  uint32_t record_size; // sum (sizeof (field_type_i)) | 0 <= i < field_count. field_type_i is NOT defined in the files.
+  uint32_t string_block_size;
+};
+```","https://wowdev.wiki/DBC
+https://wowdev.wiki/Category:DBC_WotLK
+https://rgtc.fandom.com/wiki/Files:DBC
+https://trinitycore.info/files/DBC/335/spell
+https://trinitycore.info/files/DBC/335/item
+https://trinitycore.info/files/DBC/335/creaturedisplayinfo
+https://trinitycore.info/files/DBC/335/charsections
+https://github.com/dawidcxx/wow-file-tools
+https://trinitycore.info/en/files/DBC/335/DBC",/home/ubuntu/detailed_findings/0_94ilvvajFd7vhX4lmLFYAb_1769897876914_na1fn_L2hvbWUvdWJ1bnR1L2RldGFpbGVkX2ZpbmRpbmdz.md,
+"M2 Model Format Complete - Research the complete M2 model format for 3.3.5a including: full header structure, animation tracks (M2Track), texture animations, particle emitters, ribbon emitters, attachment points, cameras, lights, bone flags, render flags, global sequences, and all sub-chunks",M2 Model Format Complete,"The M2 model format is a complex, non-chunked binary format used by World of Warcraft to represent 3D models, including characters, creatures, and environmental doodads. It contains a main header that points to various data blocks for geometry, skeleton, animations, textures, and special effects, with some data being offloaded to external `.skin` and `.anim` files in version 3.3.5a.","```c
+struct M2Header {
+    uint32_t magic;                                       // ""MD20"". Legion uses a chunked file format starting with MD21.
+    uint32_t version;
+    M2Array<char> name;
+    struct {
+        uint32_t flag_tilt_x: 1;
+        uint32_t flag_tilt_y: 1;
+        uint32_t: 1;
+        uint32_t flag_use_texture_combiner_combos: 1;
+        uint32_t: 1;
+        uint32_t flag_load_phys_data: 1;
+        uint32_t: 1;
+        uint32_t flag_unk_0x80: 1;
+        uint32_t flag_camera_related: 1;
+        uint32_t flag_new_particle_record: 1;
+        uint32_t flag_unk_0x400: 1;
+        uint32_t flag_texture_transforms_use_bone_sequences: 1;
+        uint32_t flag_unk_0x1000: 1;
+        uint32_t ChunkedAnimFiles_0x2000: 1;
+        uint32_t flag_unk_0x4000: 1;
+        uint32_t flag_unk_0x8000: 1;
+        uint32_t flag_unk_0x10000: 1;
+        uint32_t flag_unk_0x20000: 1;
+        uint32_t flag_unk_0x40000: 1;
+        uint32_t flag_unk_0x80000: 1;
+        uint32_t flag_unk_0x100000: 1;
+        uint32_t flag_unk_0x200000: 1;
+        uint32_t flag_unk_0x40000000: 1;
+    } global_flags;
+    M2Array<M2Loop> global_loops;
+    M2Array<M2Sequence> sequences;
+    M2Array<uint16_t> sequenceIdxHashById;
+    M2Array<M2SequenceFallback> playable_animation_lookup;
+    M2Array<M2CompBone> bones;
+    M2Array<uint16_t> boneIndicesById;
+    M2Array<M2Vertex> vertices;
+    uint32_t num_skin_profiles;
+    M2Array<M2Color> colors;
+    M2Array<M2Texture> textures;
+    M2Array<M2TextureWeight> texture_weights;
+    M2Array<M2TextureTransform> texture_transforms;
+    M2Array<uint16_t> textureIndicesById;
+    M2Array<M2Material> materials;
+    M2Array<uint16_t> boneCombos;
+    M2Array<uint16_t> textureCombos;
+    M2Array<uint16_t> textureCoordCombos;
+    M2Array<uint16_t> textureWeightCombos;
+    M2Array<uint16_t> textureTransformCombos;
+    CAaBox bounding_box;
+    float bounding_sphere_radius;
+    CAaBox collision_box;
+    float collision_sphere_radius;
+    M2Array<uint16_t> collisionIndices;
+    M2Array<C3Vector> collisionPositions;
+    M2Array<C3Vector> collisionFaceNormals;
+    M2Array<M2Attachment> attachments;
+    M2Array<uint16_t> attachmentIndicesById;
+    M2Array<M2Event> events;
+    M2Array<M2Light> lights;
+    M2Array<M2Camera> cameras;
+    M2Array<uint16_t> cameraIndicesById;
+    M2Array<M2Ribbon> ribbon_emitters;
+    M2Array<M2Particle> particle_emitters;
+};
+```","Global Flags:
+flag_tilt_x = 0x1
+flag_tilt_y = 0x2
+flag_use_texture_combiner_combos = 0x8
+flag_load_phys_data = 0x20
+flag_unk_0x80 = 0x80
+flag_camera_related = 0x100
+flag_new_particle_record = 0x200
+
+Bone Flags:
+ignore_parent_translate = 0x8
+ignore_parent_scale = 0x10
+ignore_parent_rotation = 0x20
+screen_align = 0x40
+unfogged = 0x200
+
+Material Flags:
+Unlit = 0x01
+Unfogged = 0x02
+Two-sided = 0x04
+depthTest = 0x08
+depthWrite = 0x10
+
+Texture Flags:
+Texture wrap X = 0x1
+Texture wrap Y = 0x2","- M2 models are used for most game objects, including characters, creatures, and doodads.
+- They are related to several other file formats like `.skin`, `.anim`, `.phys`, `.bone`, and `.skel` which contain additional model data.
+- Textures are stored in `.blp` files.
+- Animation data can be found in `AnimationData.dbc`.","Wow-model-viewer: A popular tool for viewing WoW models.
+010 Editor: A hex editor with templates for many WoW file formats, including M2.
+Blender M2 import/export scripts: Various scripts are available for importing and exporting M2 models into Blender.","```c
+// Generic M2 array
+template<typename T>
+struct M2Array {
+  uint32_t size;
+  uint32_t offset; // pointer to T, relative to begin of m2 data block
+};
+
+// Generic M2 track
+struct M2TrackBase {
+  uint16_t trackType;
+  uint16_t loopIndex;
+  M2Array<M2SequenceTimes> sequenceTimes;
+};
+
+template<typename T>
+struct M2Track : M2TrackBase {
+  M2Array<M2Array<T>> values;
+};
+```",https://wowdev.wiki/M2,/home/ubuntu/detailed_findings/1_tRLvJXx6F9kULO2a31jKk8_1769897224985_na1fn_L2hvbWUvdWJ1bnR1L20yX3Jlc2VhcmNoX291dHB1dC9kZXRhaWxlZF9maW5kaW5ncw.md,
+"WMO World Model Object Format Complete - Research WMO root and group files including: MOHD complete fields, materials (MOMT), portals (MOPT/MOPR), lights (MOLT), fog (MFOG), doodad sets (MODS/MODD), group flags, BSP tree structure, vertex colors, batches",WMO World Model Object Format,"The World of Warcraft WMO (World Model Object) file format is a comprehensive structure for defining large environmental objects like buildings, dungeons, and other complex static geometry. For version 3.3.5a, the format is composed of a primary root file and one or more group files. The root file acts as a central directory, containing metadata, material definitions, and references to textures, doodads, and the associated group files. Each group file then contains the actual geometric data, including vertices, normals, texture coordinates, and rendering batches for a specific part of the overall WMO.","```c
+struct SMOHeader
+{
+  uint32_t nTextures;       // Number of textures (BLP files) used in this WMO.
+  uint32_t nGroups;         // Number of WMO group files.
+  uint32_t nPortals;        // Number of portals.
+  uint32_t nLights;         // Number of lights.
+  uint32_t nDoodadNames;    // Number of doodad names.
+  uint32_t nDoodadDefs;     // Number of doodad instances.
+  uint32_t nDoodadSets;     // Number of doodad sets.
+  uint32_t ambColor;        // Ambient color in BGRA format.
+  uint32_t wmoID;           // Foreign key to WMOAreaTable.dbc.
+  CAaBox   boundingBox;     // The bounding box of the entire WMO.
+  uint16_t flags;           // WMO flags.
+  uint16_t numLod;          // Number of LOD levels (for LOD-enabled WMOs).
+};
+```
+
+```c
+struct SMOMaterial
+{
+  uint32_t flags;           // Material flags.
+  uint32_t shader;          // Index into a shader metadata table.
+  uint32_t blendMode;       // The blending mode for the material.
+  uint32_t texture_1;       // Offset into the MOTX chunk for the first texture.
+  uint32_t color_1;         // Color in BGRA format.
+  uint32_t flags_1;         // Additional flags for the first texture.
+  uint32_t texture_2;       // Offset into the MOTX chunk for the second texture.
+  uint32_t color_2;         // Color in BGRA format.
+  uint32_t flags_2;         // Additional flags for the second texture.
+  uint32_t color_3;         // Color in BGRA format.
+  float    f_unk1;          // Unknown float.
+  float    f_unk2;          // Unknown float.
+  uint32_t dx_texture_1;    // DirectX texture related.
+  uint32_t dx_texture_2;    // DirectX texture related.
+  uint32_t dx_texture_3;    // DirectX texture related.
+  uint32_t dx_texture_4;    // DirectX texture related.
+  uint32_t dx_texture_5;    // DirectX texture related.
+  uint32_t dx_texture_6;    // DirectX texture related.
+  uint32_t dx_texture_7;    // DirectX texture related.
+  uint32_t dx_texture_8;    // DirectX texture related.
+};
+```
+
+```c
+struct SMOGroup
+{
+  uint32_t groupName;           // Offset into the MOGN chunk for the group name.
+  uint32_t descriptiveGroupName;// Offset into the MOGN chunk for a descriptive name.
+  uint32_t flags;               // Group flags.
+  CAaBox   boundingBox;         // The bounding box of the group.
+  uint16_t portalStart;         // Starting index into the MOPR chunk.
+  uint16_t portalCount;         // Number of portal references.
+  uint16_t transBatchCount;     // Number of transparent render batches.
+  uint16_t intBatchCount;       // Number of interior render batches.
+  uint16_t extBatchCount;       // Number of exterior render batches.
+  uint16_t padding_or_batch_type_d; // Unknown.
+  uint8_t  fogIds[4];           // Indices into the MFOG chunk.
+  uint32_t groupLiquid;         // Liquid type information.
+  uint32_t uniqueID;            // Foreign key to WMOAreaTable.dbc.
+  uint32_t flags2;              // Additional group flags.
+  uint32_t unk;                 // Unknown.
+};
+```
+
+```c
+// MOVT - Vertices
+struct SMOVertex
+{
+  float x, y, z;
+};
+
+// MOVI - Vertex Indices
+struct SMOIndices
+{
+  uint16_t indices[3];
+};
+
+// MONR - Normals
+struct SMONormal
+{
+  float nx, ny, nz;
+};
+
+// MOTV - Texture Coordinates
+struct SMOTexCoord
+{
+  float u, v;
+};
+```
+
+```c
+struct SMOBatch
+{
+  int16_t  unknown_box[6];
+  uint32_t startIndex;      // Starting index into the MOVI chunk.
+  uint16_t count;           // Number of indices to draw.
+  uint16_t minIndex;        // Minimum vertex index in the batch.
+  uint16_t maxIndex;        // Maximum vertex index in the batch.
+  uint8_t  flag_unknown_1;
+  uint8_t  material_id;     // Index into the MOMT chunk.
+};
+```
+
+```c
+struct SMOColor
+{
+  uint8_t b, g, r, a;
+};
+```
+
+```c
+// MOBN - BSP Nodes
+struct CAaBspNode
+{
+  uint16_t flags;       // Node flags (leaf, plane axis).
+  int16_t  negChild;    // Index of the negative child node.
+  int16_t  posChild;    // Index of the positive child node.
+  uint16_t nFaces;      // Number of faces in this node.
+  uint32_t faceStart;   // Starting index into the MOBR chunk.
+  float    planeDist;   // Distance of the splitting plane.
+};
+
+// MOBR - BSP Face Indices
+struct SMOBspFace
+{
+  uint16_t indices[3];
+};
+```","flag_do_not_attenuate_vertices_based_on_distance_to_portal = 0x1
+flag_use_unified_render_path = 0x2
+flag_use_liquid_type_dbc_id = 0x4
+flag_do_not_fix_vertex_color_alpha = 0x8
+
+F_UNLIT = 0x1
+F_UNFOGGED = 0x2
+F_UNCULLED = 0x4
+F_EXTLIGHT = 0x8
+F_SIDN = 0x10
+F_WINDOW = 0x20
+F_CLAMP_S = 0x40
+F_CLAMP_T = 0x80
+
+Has BSP tree = 0x1
+Has vertex colors = 0x4
+EXTERIOR = 0x8
+EXTERIOR_LIT = 0x40
+UNREACHABLE = 0x80
+Has lights = 0x200
+Has doodads = 0x800
+LIQUIDSURFACE = 0x1000
+INTERIOR = 0x2000
+Show skybox = 0x40000
+CVERTS2 = 0x1000000
+TVERTS2 = 0x2000000","*   **WDT (World Definition Template):** WDT files contain a grid of map tiles and for each tile, they can contain a WMO. The WDT file specifies the position, rotation, and scale of the WMO in the world.
+*   **ADT (Area Data Template):** ADT files define the terrain of a map tile. They can also contain references to WMOs, including their position and rotation. Doodad sets for WMOs are also specified in the ADT files.
+*   **M2/MDX (Model):** M2 files are the primary model format for characters, creatures, and doodads. WMO files reference M2 files for doodads, which are decorative objects placed within the WMO.
+*   **BLP (Blizzard Picture):** BLP files are the texture format used in World of Warcraft. WMO files reference BLP files for the textures that are applied to the WMO's surfaces.","WoW Model Viewer: A 3D model viewer for World of Warcraft that can be used to view WMO and M2 models.
+Blender WMO import/export scripts: An addon for the 3D modeling software Blender that allows for the import, export, and editing of WMO files.
+wow_wmo (Rust library): A library for the Rust programming language that provides a comprehensive set of tools for parsing, editing, and converting WMO files.
+010 Editor: A hex editor that has a template for the WMO file format. This allows for the direct viewing and editing of the raw data in a WMO file.","```cpp
+bool CMapObj::QueryLighting ( CMapObj * this , uint32_t groupIndex , const C3Segment * seg , CImVector * color , bool * a5 ) { 
+
+ CMapObjGroup group = this -> groupList [ groupIndex ]; 
+
+ if ( ! this -> unk6 [ 16 ] || ! ( group -> unk14 & 1 ) || group -> flags & ( SMOGroup :: EXTERIOR | SMOGroup :: EXTERIOR_LIT )) { 
+
+ return 0 ; 
+
+ } 
+
+ World :: TriData :: resultFlags = 0 ; 
+ World :: TriData :: nBatches = 0 ; 
+ World :: TriData :: nTriIndices = 0 ; 
+ World :: TriData :: nVertexIndices = 0 ; 
+ World :: TriData :: nMatrices = 0 ; 
+
+ float hitT = 1.0 ; 
+
+ // Query the BSP tree for the group to find appropriate tris 
+
+ bool triRes = CMapObjGroup :: GetTris ( group , seg , & hitT , 0 , 0x8 , ( int ) & a2 + 3 , 0 ); 
+
+ if ( ! triRes ) { 
+
+ return 0 ; 
+
+ } 
+
+ // Obtain point matching intersection between segment and tri 
+
+ C3Vector point ; 
+
+ point . x = seg -> start . x + hitT * ( seg -> end . x - seg -> start . x ); 
+ point . y = seg -> start . y + hitT * ( seg -> end . y - seg -> start . y ); 
+ point . z = seg -> start . z + hitT * ( seg -> end . z - seg -> start . z ); 
+
+ unsigned __int16 hitPoly = word_CD8094 ; 
+
+ bool lightRes = CMapObjGroup :: QueryLighting ( group , & point , hitPoly , color , a5 ); 
+
+ return lightRes ; 
+
+ }
+```
+
+```cpp
+void CMapObjGroup::FixColorVertexAlpha () 
+ { 
+ int32_t intBatchStart ; 
+
+ if ( this -> transBatchCount > 0 ) 
+ { 
+ intBatchStart = this -> batchList [ this -> transBatchCount - 1 ]. maxIndex + 1 ; 
+ } 
+ else 
+ { 
+ intBatchStart = 0 ; 
+ } 
+
+ if ( this -> colorVertexCount > 0 ) 
+ { 
+ for ( int32_t i = 0 ; i < this -> colorVertexCount ; i ++ ) 
+ { 
+ CImVector * color = & this -> colorVertexList [ i ]; 
+
+ // Int / ext batches 
+ if ( i >= intBatchStart ) 
+ { 
+ int32_t v6 = ( color -> r + ( color -> a * color -> r / 64 )) / 2 ; 
+ int32_t v7 = ( color -> g + ( color -> a * color -> g / 64 )) / 2 ; 
+ int32_t v8 = ( color -> b + ( color -> a * color -> b / 64 )) / 2 ; 
+
+ v6 = v6 > 255 ? 255 : v6 ; 
+ v7 = v7 > 255 ? 255 : v7 ; 
+ v8 = v8 > 255 ? 255 : v8 ; 
+
+ color -> r = v6 ; 
+ color -> g = v7 ; 
+ color -> b = v8 ; 
+
+ color -> a = 255 ; 
+ // Trans batches 
+ } 
+ else 
+ { 
+ color -> r /= 2 ; 
+ color -> g /= 2 ; 
+ color -> b /= 2 ; 
+ } 
+ } 
+ } 
+ }
+```","https://wowdev.wiki/WMO
+https://wowdev.wiki/WMO/Rendering",/home/ubuntu/detailed_findings/2_qK9pRlWGWzDawOPNcioFi0_1769897325230_na1fn_L2hvbWUvdWJ1bnR1L3dtb19yZXBvcnQ.md,
+"ADT Terrain Format Complete - Research complete ADT format including: all chunks (MHDR, MCIN, MTEX, MMDX, MMID, MWMO, MWID, MDDF, MODF, MCNK subchunks), MFBO flight bounds, MH2O liquid details, MCRF references, MCSH shadows, texture flags",ADT Terrain Format Complete,"The ADT (Arclight Terrain) file format, specifically version 18 for WoW 3.3.5a, is a complex, chunk-based structure that defines a single map tile's terrain, including its geometry, texturing, and placed objects. It contains numerous data chunks like MHDR, MCIN, and 256 MCNK chunks, each with sub-chunks detailing heightmaps, normals, and liquid data. Understanding this format is crucial for building custom tools and applications that interact with WoW's game world.","```c
+// MVER Chunk
+struct MVER {
+  uint32_t version; // Always 18 for 3.3.5a
+};
+
+// MHDR Chunk
+struct MHDR {
+  enum MHDRFlags {
+    mhdr_MFBO = 1,      // Contains an MFBO chunk.
+    mhdr_northrend = 2, // Set for Northrend maps.
+  };
+  uint32_t flags;
+  uint32_t mcin;      // Offset to MCIN chunk
+  uint32_t mtex;      // Offset to MTEX chunk
+  uint32_t mmdx;      // Offset to MMDX chunk
+  uint32_t mmid;      // Offset to MMID chunk
+  uint32_t mwmo;      // Offset to MWMO chunk
+  uint32_t mwid;      // Offset to MWID chunk
+  uint32_t mddf;      // Offset to MDDF chunk
+  uint32_t modf;      // Offset to MODF chunk
+  uint32_t mfbo;      // Offset to MFBO chunk (if flags & mhdr_MFBO)
+  uint32_t mh2o;      // Offset to MH2O chunk
+  uint32_t mtxf;      // Offset to MTXF chunk
+  uint8_t mamp_value; // Cata+, explicit MAMP chunk overrides data
+  uint8_t padding[3];
+  uint32_t unused[3];
+};
+
+// MCIN Chunk
+struct MCIN_Entry {
+  uint32_t offset; // Absolute offset to MCNK chunk
+  uint32_t size;   // Size of the MCNK chunk
+  uint32_t flags;  // Always 0 in file, 1 when loaded in client
+  uint32_t asyncId; // Client-side use only
+};
+
+struct MCIN {
+  MCIN_Entry entries[256];
+};
+
+// MTEX Chunk
+struct MTEX {
+  char filenames[]; // Null-terminated strings of texture paths
+};
+
+// MMDX Chunk
+struct MMDX {
+  char filenames[]; // Null-terminated strings of M2 model paths
+};
+
+// MMID Chunk
+struct MMID {
+  uint32_t offsets[]; // Offsets into MMDX for model filenames
+};
+
+// MWMO Chunk
+struct MWMO {
+  char filenames[]; // Null-terminated strings of WMO model paths
+};
+
+// MWID Chunk
+struct MWID {
+  uint32_t offsets[]; // Offsets into MWMO for model filenames
+};
+
+// MDDF Chunk
+struct MDDF_Entry {
+  uint32_t nameId;        // Index into MMID
+  uint32_t uniqueId;      // A unique ID for this doodad instance
+  float position[3];    // X, Y, Z coordinates
+  float rotation[3];    // Rotation in degrees
+  uint16_t scale;         // Scale factor * 1024
+  uint16_t flags;         // See MDDFFlags
+};
+
+// MODF Chunk
+struct MODF_Entry {
+  uint32_t nameId;        // Index into MWID
+  uint32_t uniqueId;      // A unique ID for this WMO instance
+  float position[3];    // X, Y, Z coordinates
+  float rotation[3];    // Rotation in degrees
+  float extents[6];     // Bounding box
+  uint16_t flags;         // See MODFFlags
+  uint16_t doodadSet;     // Which doodad set to use from the WMO
+  uint16_t nameSet;       // Which name set to use
+  uint16_t scale;         // Scale factor
+};
+
+// MCNK Chunk Header
+struct MCNK_Header {
+  uint32_t flags;
+  uint32_t indexX;
+  uint32_t indexY;
+  uint32_t nLayers;
+  uint32_t nDoodadRefs;
+  uint32_t ofsHeight;
+  uint32_t ofsNormal;
+  uint32_t ofsLayer;
+  uint32_t ofsRefs;
+  uint32_t ofsAlpha;
+  uint32_t sizeAlpha;
+  uint32_t ofsShadow;
+  uint32_t sizeShadow;
+  uint32_t areaid;
+  uint32_t nMapObjRefs;
+  uint16_t holes_low_res;
+  uint16_t unknown_but_used;
+  uint8_t predominantTexture[8][8];
+  uint8_t noEffectDoodad[8][8];
+  uint32_t ofsSndEmitters;
+  uint32_t nSndEmitters;
+  uint32_t ofsLiquid;
+  uint32_t sizeLiquid;
+  float position[3];
+  uint32_t ofsMCCV;
+  uint32_t ofsMCLV; // Cata+
+  uint32_t unused;
+};
+
+// MCVT Sub-chunk
+struct MCVT {
+  float height[9*9 + 8*8];
+};
+
+// MCNR Sub-chunk
+struct MCNR {
+  int8_t normal[3][9*9 + 8*8];
+};
+
+// MCLY Sub-chunk
+struct MCLY_Entry {
+  uint32_t textureId; // Index into MTEX
+  uint32_t flags;
+  uint32_t offsetInMCAL;
+  int16_t effectId;
+  int16_t padding;
+};
+
+// MCRF Sub-chunk
+struct MCRF {
+  uint32_t doodad_refs[]; // Indices into MDDF
+  uint32_t object_refs[]; // Indices into MODF
+};
+
+// MCSH Sub-chunk
+struct MCSH {
+  uint8_t shadow_map[64 * 64 / 8]; // 1 bit per pixel
+};
+
+// MCAL Sub-chunk
+// See detailed explanation in the wiki page.
+
+// MH2O Chunk
+struct MH2O_Header {
+  uint32_t ofsInformation;
+  uint32_t nLayers;
+  uint32_t ofsData;
+};
+
+struct MH2O_Information {
+  uint16_t liquidType;
+  uint16_t flags;
+  float heightLevel1;
+  float heightLevel2;
+  uint8_t xOffset;
+  uint8_t yOffset;
+  uint8_t width;
+  uint8_t height;
+  uint32_t ofsBitmap;
+  uint32_t ofsVertexData;
+};
+```","### MHDR Flags
+
+*   `mhdr_MFBO` = 1: Contains an `MFBO` chunk.
+*   `mhdr_northrend` = 2: Set for Northrend maps.
+
+### MCNK Flags
+
+*   `has_mcsh` = 0x1: Has `MCSH` shadow chunk.
+*   `impass` = 0x2: Impassable terrain.
+*   `lq_river` = 0x4: River water.
+*   `lq_ocean` = 0x8: Ocean water.
+*   `lq_magma` = 0x10: Magma/lava.
+*   `lq_slime` = 0x20: Slime.
+*   `has_mccv` = 0x40: Has `MCCV` vertex color chunk.
+*   `do_not_fix_alpha_map` = 0x8000: Don't fix 63x63 alpha maps to 64x64.
+
+### MCLY Flags
+
+*   `animation_rotation` = 0x1
+*   `animation_speed` = 0x2
+*   `animation_enabled` = 0x4
+*   `overbright` = 0x8
+*   `use_alpha_map` = 0x10
+*   `alpha_map_compressed` = 0x20
+*   `use_cube_map_reflection` = 0x40","*   **WDT:** The World Definition Tile file (`.wdt`) defines which ADT tiles exist for a given map and contains global map information.
+*   **M2:** Doodads (small objects and decorations) are stored in the M2 model format and are referenced by the `MMDX` and `MDDF` chunks.
+*   **WMO:** World Map Objects (large structures like buildings and dungeons) are stored in the WMO format and are referenced by the `MWMO` and `MODF` chunks.
+*   **BLP:** Textures used for terrain and models are stored in the BLP (Blizzard Picture) format.","*   **Noggit:** A popular World of Warcraft map editor that can view and edit ADT files.
+*   **010 Editor:** A hex editor with templates available for various WoW file formats, including ADT.
+*   **AdtTools:** A C# framework for manipulating ADT files.
+*   **wow-adt:** A Rust crate for parsing ADT files.","```cpp
+unsigned offI = 0; //offset IN buffer
+unsigned offO = 0; //offset OUT buffer
+char* buffIn; // pointer to data in adt file
+char buffOut[4096]; // the resulting alpha map
+
+while( offO < 4096 )
+{
+  // fill or copy mode
+  bool fill = buffIn[offI] & 0x80;
+  unsigned n = buffIn[offI] & 0x7F;
+  offI++;
+  for( unsigned k = 0; k < n; k++ )
+  {
+    buffOut[offO] = buffIn[offI];
+    offO++;
+    if( !fill )
+      offI++;
+  }
+  if( fill ) offI++;
+}
+```",https://wowdev.wiki/ADT/v18,/home/ubuntu/detailed_findings/3_s90lEzSALxO9gLISmWCKrb_1769897205337_na1fn_L2hvbWUvdWJ1bnR1L2RldGFpbGVkX2ZpbmRpbmdz.md,
+"WDT World Definition Table Format - Research WDT format including: MPHD flags, MAIN chunk structure, MWMO for global WMO maps, relationship to ADT files, map flags for instances/battlegrounds",WDT World Definition Table Format,"WDT files are the top-level map files in WoW 3.3.5a, defining which ADT map tiles are present or referencing a global WMO for non-terrain maps. The file is chunk-based, with the MPHD chunk containing flags that control map rendering, and the MAIN chunk acting as a 64x64 grid to indicate the presence of ADT files.","```c
+struct MPHD {
+  uint32_t flags;
+  uint32_t something; // Used to initialize MAIN chunk data in some cases
+  uint32_t unused[6];
+};
+```
+
+```c
+struct SMAreaInfo {
+  uint32_t Flag_HasADT : 1;
+  uint32_t Flag_Loaded : 1; // Set at runtime
+  uint32_t asyncId; // Set at runtime
+};
+```
+
+```c
+struct SMMapObjDef {
+  uint32_t nameId; // Not used, filename from MWMO is used
+  uint32_t uniqueId; // Dynamically generated
+  float position[3];
+  float orientation[3];
+  float upperExtents[3];
+  float lowerExtents[3];
+  uint16_t flags;
+  uint16_t doodadSet;
+  uint16_t nameSet;
+  uint16_t pad;
+};
+```","wdt_uses_global_map_obj = 0x1
+adt_has_mccv = 0x2
+adt_has_big_alpha = 0x4
+adt_has_doodadrefs_sorted_by_size_cat = 0x8
+FLAG_LIGHTINGVERTICES = 0x10
+adt_has_upside_down_ground = 0x20","*   **ADT (Area Definition Table):** WDT files specify which ADT files are present in a map.
+*   **WMO (World Map Object):** WDT files can reference a global WMO for maps without terrain.
+*   **WDL (World Definition Low-res):** WDL files contain low-resolution heightmap data for the entire map.","WDT Editor: A tool for editing WDT files.
+BLPConverter: For converting BLP files.","```c
+// Pseudocode for parsing a WDT file
+
+function parseWDT(file) {
+  const mphd = readMPHD(file);
+  const main = readMAIN(file);
+
+  if (mphd.flags & 0x1) {
+    const mwmo = readMWMO(file);
+    const modf = readMODF(file);
+    // This is a WMO-based map
+  } else {
+    // This is an ADT-based map
+    for (let y = 0; y < 64; y++) {
+      for (let x = 0; x < 64; x++) {
+        if (main.areaInfo[y][x].Flag_HasADT) {
+          // Load ADT file for this tile
+        }
+      }
+    }
+  }
+}
+```",https://wowdev.wiki/WDT,/home/ubuntu/detailed_findings/4_REZourATzyhqOIA3QJehJA_1769897172581_na1fn_L2hvbWUvdWJ1bnR1L3dkdF9yZXNlYXJjaA.md,
+"BLP Texture Format Complete - Research BLP2 format details including: all compression types, alpha channel handling, mipmap generation, palette format, DXT variants (DXT1/DXT3/DXT5), encoding/decoding algorithms",BLP2 Texture Format,"BLP2 is a texture format used by Blizzard Entertainment in games like World of Warcraft. It supports various compression methods, including DXT1, DXT3, and DXT5, as well as uncompressed and palettized formats. The file structure consists of a header, mipmap offsets and sizes, and the texture data for each mipmap level.","```c
+struct BLPHeader {
+  uint32_t magic; // 'BLP2'
+  uint32_t formatVersion; // always 1
+  uint8_t colorEncoding; // 1: uncompressed, 2: DXTC, 3: plain A8R8G8B8
+  uint8_t alphaSize; // 0, 1, or 8
+  uint8_t preferredFormat;
+  uint8_t hasMips; // 0: no mipmaps, 1: mipmaps
+  uint32_t width;
+  uint32_t height;
+  uint32_t mipOffsets[16];
+  uint32_t mipSizes[16];
+  union {
+    struct BlpPalPixel {
+      uint8_t b, g, r, pad;
+    } palette[256];
+    struct {
+      uint32_t headerSize;
+      char headerData[1020];
+    } jpeg;
+  } extended;
+};
+```","colorEncoding:
+1 = Uncompressed
+2 = DXTC (DXT1, DXT3, DXT5)
+3 = Plain A8R8G8B8 (Cataclysm)
+
+alphaSize:
+0 = No alpha
+1 = 1-bit alpha
+8 = 8-bit alpha","- BLP files are used for textures in various WoW file formats, such as M2 (models) and WMO (World Map Objects).
+- The DXT compression formats (DXT1, DXT3, DXT5) are standard S3 Texture Compression formats.","BLPConverter: A tool for converting BLP files to other formats.
+Pillow: A Python imaging library with support for reading BLP files.
+wow_blp: A Rust crate for parsing BLP files.","```javascript
+// Calculating valid mipmap size
+if ((textureFormat == ""DXT5"") || (textureFormat == ""DXT3"")) {
+    validSize = Math.floor((width + 3) / 4) * Math.floor((height + 3) / 4) * 16;
+}
+if ((textureFormat == ""RGB_DXT1"") || (textureFormat == ""RGBA_DXT1"")) {
+    validSize = Math.floor((width + 3) / 4) * Math.floor((height + 3) / 4) * 8;
+}
+```","https://wowdev.wiki/BLP
+https://github.com/Pinta365/blp
+http://justsolve.archiveteam.org/wiki/BLP",/home/ubuntu/detailed_findings/5_LGMM41BRv3vCfXeSD6pHmx_1769897162393_na1fn_L2hvbWUvdWJ1bnR1L2JscF9yZXNlYXJjaA.md,
+"Skin and LOD Files - Research .skin file format for M2 models including: vertex indices, triangle batches, bone combinations, texture units, render batches, LOD system (skin0-skin3), bone lookup tables",Skin and LOD Files,"The .skin file format, introduced in World of Warcraft: Wrath of the Lich King, is a critical component for rendering M2 models with varying levels of detail (LODs). It separates the submesh and LOD data from the main M2 file, allowing the game to load simplified versions of models at a distance to improve performance. The format specifies vertex and index lookup tables, bone mappings, texture units, and render batches for each LOD, enabling a flexible and efficient rendering pipeline.","```c
+struct M2SkinProfile
+{
+  uint32_t                magic;                         // 'SKIN'
+  M2Array<unsigned short> vertices;
+  M2Array<unsigned short> indices;
+  M2Array<ubyte4>         bones;
+  M2Array<M2SkinSection>  submeshes;
+  M2Array<M2Batch>        batches;
+  uint32_t                boneCountMax;
+  M2Array<M2ShadowBatch>  shadow_batches;
+};
+
+struct M2SkinSection
+{
+  uint16_t skinSectionId;
+  uint16_t Level;
+  uint16_t vertexStart;
+  uint16_t vertexCount;
+  uint16_t indexStart;
+  uint16_t indexCount;
+  uint16_t boneCount;
+  uint16_t boneComboIndex;
+  uint16_t boneInfluences;
+  uint16_t centerBoneIndex;
+  C3Vector centerPosition;
+  C3Vector sortCenterPosition;
+  float sortRadius;
+};
+
+struct M2Batch
+{
+  uint8_t flags;
+  int8_t priorityPlane;
+  uint16_t shader_id;
+  uint16_t skinSectionIndex;
+  uint16_t geosetIndex;
+  uint16_t colorIndex;
+  uint16_t materialIndex;
+  uint16_t materialLayer;
+  uint16_t textureCount;
+  uint16_t textureComboIndex;
+  uint16_t textureCoordComboIndex;
+  uint16_t textureWeightComboIndex;
+  uint16_t textureTransformComboIndex;
+};
+
+struct M2ShadowBatch
+{
+  uint8_t  flags;          // 0x1: Casters don't have shadows. Appears on some doodads.
+  uint8_t  flags2;
+  uint16_t ground_type;
+  int16_t  bone_index;
+  uint16_t submesh_id;
+  uint16_t vertex_count;
+  uint16_t index_count;
+  uint32_t vertex_offset;
+  uint32_t index_offset;
+};
+```","### Magic Number
+- `SKIN`: The first 4 bytes of a .skin file, identifying it as such.
+
+### M2Batch Flags
+- `0x1`: Invert texture mapping
+- `0x2`: Transform
+- `0x4`: Project texture
+- `0x10`: Unlit
+- `0x40`: Unfogged
+
+### M2ShadowBatch Flags
+- `0x1`: Casters don't have shadows. Appears on some doodads.","- **M2 Files:** .skin files are intrinsically linked to .m2 model files. The .skin file references vertex and bone data within the .m2 file, and the .m2 file relies on the .skin file for LOD information.
+- **CreatureDisplayInfo.dbc and ItemDisplayInfo.dbc:** These database files use geoset data to customize the appearance of creatures and items, which directly corresponds to the submesh IDs defined in the .skin file.","- **jM2converter:** A universal converter for WoW M2 formats.
+- **LKBC_Converter:** A tool to convert M2 models from WotLK to The Burning Crusade format.","### C++ Example for Applying Monster Geosets
+
+```cpp
+void ApplyMonsterGeosets(CM2Model *pModel, CreatureDisplayInfoRec *pDisplayInfo, CharacterComponent *pCharacterComponent)
+{
+    if (pModel && pDisplayInfo)
+    {
+        CreatureModelData *modelDataRec = ClientDB::CreatureModelDataDB::GetRow(pCharacterComponent->ModelId);
+        
+        if (!modelDataRec)
+            __debugbreak();
+
+        if (modelDataRec->CreatureGeosetDataID)
+        {
+            CM2Model::SetGeometryVisible(pModel, 1, 899, false);
+
+            int displayInfoID = pDisplayInfo->ID;
+
+            auto geosetDatas = ClientDB::CreatureDisplayInfoGeosetDataDB::GetRows([](auto cdigd) { return cdigd->CreatureDisplayInfoID == displayInfoID; });
+
+            for (auto geosetData : geosetDatas)
+            {
+                int meshId1 = 100 * (geosetData->GeosetIndex + 1);
+                CM2Model::SetGeometryVisible(pModel, meshId1, meshId1 + 99, false);
+                int meshId2 = meshId1 + geosetData->GeosetValue;
+                CM2Model::SetGeometryVisible(pModel, meshId2, meshId2, true);
+            }
+        }
+    }
+}
+```
+
+### JavaScript Example for WotLK Runtime Shader Selection
+
+```javascript
+function CM2Shared.sub837A40() 
+{
+  /* Some code is skipped */
+  
+  if ( !((_BYTE)field[4]->field_4 & 8) )
+  {
+    M2Vertex* override_vertices = SMemNew(sizeof (M2Vertex) * skinFile->indices.count);
+
+    // 2. zero-initialize (but will be overridden with real vertices in 3.)
+    // 3. Copy data from initial vertex of m2 and override boneIndexes
+    
+    for (int meshIndex = 0; meshIndex < skinFile->submeshes.count; ++meshIndex)
+    {
+      M2SkinSection* subMesh = skinFile->submeshes.data[meshIndex];
+
+      for (int vertIndex = subMesh->StartVertex; vertIndex < (subMesh->StartVertex + subMesh->vertices.count); ++vertIndex)
+      {
+        override_vertices[vertIndex] = m_data->vertices.data[skinFile->indices.data[vertIndex]];
+
+        for (int boneInd = 0; boneInd < subMesh->boneInfluences; ++boneInd)
+        {
+          override_vertices[vertIndex].bone_indices[boneInd] =
+            m_data->bone_lookup_table.data[subMesh->StartBones + skinFile->properties.data[4*vertIndex + boneInd]];
+        }
+      }
+    }
+  
+    // 4. Override bone lookup table and in m2 file
+    for (int i = 0; i < m_data->nBoneLookupTable; ++i)
+      m_data->bone_lookup_table.data[i] = i;
+ 
+    // 5. Override indicies in skin file
+    for (int j = 0; j < skinFile->indices.count; ++j)
+      skinFile->indices.data[j] = j;
+ 
+    // 6. Override vertex array from m2 with new data
+    if ( skinFile->indices.count <= m_data->vertices.count )
+    {
+      memcpy(m_data->vertices.data, override_vertices, sizeof (M2Vertex) * skinFile->indices.count);
+      SMemFree (override_vertices);
+    }
+    else
+    {
+      field_8 |= 8u;
+      m_data->vertices.data = override_vertices;
+    }
+  
+    m_data->vertices.count = skinFile->indices.count;
+  }
+  
+  // 7. Override batch flags
+  if ( !((_BYTE)field[4]->field_4 & 8) )
+  {
+    for ( int i = 0; i < skinFile->batches.count; i++)
+    {
+      if ( skinFile->batches.data[i].op_count > 1u )
+        skinFile->batches.data[i - skinFile->batches.data[i].layer].flags |= 0x40u;
+    }
+  
+    for ( int i = 0; i < skinFile->batches.count; i++)
+    {
+      if ( skinFile->batches.data[i].layer )
+      {
+        if ( skinFile->batches.data[i - skinFile->batches.data[i].layer].flags & 0x40 )
+          skinFile->batches.data[i].flags |= 0x40u;
+      }
+    }
+  }
+}
+```",https://wowdev.wiki/M2/.skin,/home/ubuntu/detailed_findings/6_MCnew7TWrsDvGFsmnAHsku_1769897194974_na1fn_L2hvbWUvdWJ1bnR1L3NraW5fbG9kX2ZpbGVz.md,
+"Animation System and ANIM Files - Research M2 animation system including: animation sequences, bone transformations, interpolation types (none/linear/hermite/bezier), global sequences, animation lookup, external .anim files",Animation System and ANIM Files,"The World of Warcraft 3.3.5a animation system is primarily centered around the M2 model format. M2 files contain the core model data, including vertices, bones, and animation sequences. Animations can be stored either internally within the M2 file or externally in separate `.anim` files, which are loaded on demand. The system supports various interpolation methods for smooth keyframe animation, including linear, Bezier, and Hermite, allowing for complex and realistic character and creature movements. Global sequences provide a mechanism for continuous, looping animations that are independent of the main animation sequences.","```c
+// Represents a single animation sequence
+struct M2Animation {
+    uint16_t animation_id;          // Animation ID from AnimationData.dbc
+    uint16_t sub_animation_id;      // Sub-animation ID, used for variations
+    uint32_t length;                // Duration of the animation in milliseconds
+    float moving_speed;             // Speed of the model during this animation
+    uint32_t flags;                 // Animation flags
+    int16_t probability;            // Likelihood of this animation playing
+    uint16_t unused;                // Padding
+    uint32_t d1;                    // Unknown
+    uint32_t d2;                    // Unknown
+    uint32_t playback_speed;        // Speed at which the animation is played
+    float box_x, box_y, box_z;      // Bounding box for the animation
+    float box_radius;               // Bounding sphere radius
+    int16_t next_animation;         // Next animation in the sequence
+    uint16_t index;                 // Index into the sequence array
+};
+
+// Generic animation track with keyframes
+struct M2Track<T> {
+    uint16_t interpolation_type;    // 0: none, 1: linear, 2: hermite, 3: bezier
+    int16_t global_sequence;        // Global sequence ID, -1 if none
+    M2Array<uint32_t> timestamps;   // Timestamps for each keyframe
+    M2Array<T> values;              // Keyframe values
+};
+
+// Bone definition
+struct M2Bone {
+    int32_t key_bone_id;            // ID of the bone
+    uint32_t flags;                 // Bone flags
+    int16_t parent_bone;            // Parent bone index
+    uint16_t submesh_id;            // Geometric data for the bone
+    uint16_t unknown;               // Unknown
+    M2Track<C3Vector> translation;  // Translation keyframes
+    M2Track<C4Quaternion> rotation; // Rotation keyframes
+    M2Track<C3Vector> scaling;      // Scaling keyframes
+    C3Vector pivot;                 // Pivot point for the bone
+};
+
+// Quaternion for rotations
+struct C4Quaternion {
+    float x, y, z, w;
+};
+
+// 3D Vector for translations and scaling
+struct C3Vector {
+    float x, y, z;
+};
+
+// Resolved animation track data with keyframes loaded into memory
+struct ResolvedTrack<T> {
+    uint16_t interpolation_type;    // 0=None, 1=Linear, 2=Bezier, 3=Hermite
+    int16_t global_sequence;        // Global sequence index (65535 = no global sequence)
+    Vec<Vec<u32>> timestamps;       // Timestamps per animation sequence
+    Vec<Vec<T>> values;             // Values per animation sequence
+};
+```","### Animation Flags
+
+- `0x0001`: Looping animation
+- `0x0002`: No blending
+- `0x0004`: Stop at end
+- `0x0008`: Start at random time
+- `0x0010`: Play backwards
+- `0x0020`: Play once and hold
+- `0x0040`: Play once and stop
+- `0x0080`: Primary bone sequence
+- `0x0100`: Secondary bone sequence
+
+### Interpolation Types
+
+- `0`: None (no interpolation)
+- `1`: Linear
+- `2`: Hermite
+- `3`: Bezier","- **AnimationData.dbc:** This client database file contains the names and metadata for each animation ID used in the `M2Animation` struct.
+- **M2 Model Format:** The animation system is intrinsically linked to the M2 model format, which defines the skeleton, bones, and animation sequences.
+- **.skin Files:** These files define the submeshes and vertex data that are animated by the bone transformations.
+- **Game Client:** The game client is responsible for loading the M2 and `.anim` files, processing the animation data, and rendering the animated models in the game world.","- **warcraft-rs:** A Rust library and CLI toolset for parsing and converting various WoW file formats, including M2 and `.anim` files.
+- **WoW Model Viewer:** A popular tool for viewing and exploring WoW models and their animations.
+- **Blender M2 Import/Export Add-ons:** Various Blender add-ons exist for importing, editing, and exporting M2 models, which often include support for animations.","```rust
+fn interpolate_track<T: Lerp>(track: &ResolvedTrack<T>, time: f64) -> T {
+    let (timestamps, values) = track.get_keyframes_for_current_animation();
+
+    if timestamps.is_empty() {
+        return track.default_value;
+    }
+
+    let index = find_timestamp_index(timestamps, time);
+
+    if index >= timestamps.len() - 1 {
+        return values.last().clone();
+    }
+
+    let time1 = timestamps[index];
+    let time2 = timestamps[index + 1];
+    let value1 = &values[index];
+    let value2 = &values[index + 1];
+
+    let t = (time - time1) / (time2 - time1);
+
+    match track.interpolation_type {
+        0 => value1.clone(), // None
+        1 => value1.lerp(value2, t), // Linear
+        2 | 3 => { // Bezier/Hermite (simplified as linear)
+            value1.lerp(value2, t)
+        }
+        _ => value1.clone(),
+    }
+}
+```","https://wowdev.wiki/M2
+https://wowdev.wiki/M2/AnimationList
+https://github.com/wowemulation-dev/warcraft-rs",/home/ubuntu/detailed_findings/7_uEhY966U6uUuRYzeC3ErJN_1769897422414_na1fn_L2hvbWUvdWJ1bnR1L3Jlc2VhcmNoL2RldGFpbGVkX2ZpbmRpbmdz.md,
+"Spell Visual System - Research spell visuals including: SpellVisualKit DBC, SpellVisualEffectName, spell missiles, spell impacts, area effects, channeling visuals, how visuals connect to M2 models",Spell Visual System,"The spell visual system in World of Warcraft 3.3.5a is a complex system that uses several DBC files to define and control the visual effects of spells. The main files are `SpellVisual.dbc`, `SpellVisualKit.dbc`, and `SpellVisualEffectName.dbc`. These files define the different stages of a spell's visual effect, from pre-cast to impact, and link to M2 models for the actual visuals.","```c
+struct SpellVisualRec {
+    uint32_t m_ID;
+    uint32_t m_precastKit; // The visual effect used for the casting
+    uint32_t m_castKit; // The visual effect used for the cast where the spell occurs
+    uint32_t m_impactKit; // The visual effect used for the target
+    uint32_t m_stateKit; // The visual effect that can be seen while this buff/debuff remains on the target
+    uint32_t m_stateDoneKit;
+    uint32_t m_channelKit; // The visual effect used while channeling a spell
+    uint32_t m_hasMissile; // Boolean
+    uint32_t m_missileModel; // The visual effect used for the spell missile
+    uint32_t m_missilePathType;
+    uint32_t m_missileDestinationAttachment;
+    uint32_t m_missileSound;
+    uint32_t m_animEventSoundID;
+    uint32_t m_flags; // The visual effect used at the center of an AOE spell probably used for other things as well
+    uint32_t m_casterImpactKit;
+    uint32_t m_targetImpactKit; // Previous documentation had swapped this with m_flags.
+    uint32_t m_missileAttachment;
+    uint32_t m_missileFollowGroundHeight;
+    uint32_t m_missileFollowGroundDropSpeed;
+    uint32_t m_missileFollowGroundApproach;
+    uint32_t m_missileFollowGroundFlags;
+    uint32_t m_missileMotion;
+    uint32_t m_missileTargetingKit;
+    uint32_t m_instantAreaKit;
+    uint32_t m_impactAreaKit;
+    uint32_t m_persistentAreaKit; // The visual effect for AOE spells
+    float m_missileCastOffset[3];
+    float m_missileImpactOffset[3];
+};
+
+struct SpellVisualKitRec {
+  uint32_t m_ID;
+  uint32_t m_kitType;
+  uint32_t m_anim;
+  foreign_key<uint32_t, &SpellVisualEffectNameRec::m_ID> m_headEffect;
+  foreign_key<uint32_t, &SpellVisualEffectNameRec::m_ID> m_chestEffect;
+  foreign_key<uint32_t, &SpellVisualEffectNameRec::m_ID> m_baseEffect;
+  foreign_key<uint32_t, &SpellVisualEffectNameRec::m_ID> m_leftHandEffect;
+  foreign_key<uint32_t, &SpellVisualEffectNameRec::m_ID> m_rightHandEffect;
+  foreign_key<uint32_t, &SpellVisualEffectNameRec::m_ID> m_breathEffect;
+  foreign_key<uint32_t, &SpellVisualEffectNameRec::m_ID> m_specialEffect[3];
+  int32_t m_characterProcedure;
+  float m_characterParam[4];
+  foreign_key<uint32_t, &SoundEntriesRec::m_ID> m_soundID;
+  foreign_key<uint32_t, &SpellEffectCameraShakesRec::m_ID> m_shakeID;
+};
+
+struct SpellVisualEffectNameRec {
+  uint32_t m_ID;
+  stringref name;
+  stringref m_fileName;
+  float m_areaEffectSize;
+  float scale;
+  float minAllowedScale;
+  float minAllowedScale;
+};
+```","LOOP_ANIMATION = 0x40
+
+UNITEFFECTSPECIALS:
+SPECIALEFFECT_LOOTART = 0x0
+SPECIALEFFECT_LEVELUP = 0x1
+SPECIALEFFECT_FOOTSTEPSPRAYSNOW = 0x2
+SPECIALEFFECT_FOOTSTEPSPRAYSNOWWALK = 0x3
+SPECIALEFFECT_FOOTSTEPDIRT = 0x4
+SPECIALEFFECT_FOOTSTEPDIRTWALK = 0x5
+SPECIALEFFECT_COLDBREATH = 0x6
+SPECIALEFFECT_UNDERWATERBUBBLES = 0x7
+SPECIALEFFECT_COMBATBLOODSPURTFRONT = 0x8
+SPECIALEFFECT_UNUSED = 0x9
+SPECIALEFFECT_COMBATBLOODSPURTBACK = 0xA
+SPECIALEFFECT_HITSPLATPHYSICALSMALL = 0xB
+SPECIALEFFECT_HITSPLATPHYSICALBIG = 0xC
+SPECIALEFFECT_HITSPLATHOLYSMALL = 0xD
+SPECIALEFFECT_HITSPLATHOLYBIG = 0xE
+SPECIALEFFECT_HITSPLATFIRESMALL = 0xF
+SPECIALEFFECT_HITSPLATFIREBIG = 0x10
+SPECIALEFFECT_HITSPLATNATURESMALL = 0x11
+SPECIALEFFECT_HITSPLATNATUREBIG = 0x12
+SPECIALEFFECT_HITSPLATFROSTSMALL = 0x13
+SPECIALEFFECT_HITSPLATFROSTBIG = 0x14
+SPECIALEFFECT_HITSPLATSHADOWSMALL = 0x15
+SPECIALEFFECT_HITSPLATSHADOWBIG = 0x16
+SPECIALEFFECT_COMBATBLOODSPURTFRONTLARGE = 0x17
+SPECIALEFFECT_COMBATBLOODSPURTBACKLARGE = 0x18
+SPECIALEFFECT_FIZZLEPHYSICAL = 0x19
+SPECIALEFFECT_FIZZLEHOLY = 0x1A
+SPECIALEFFECT_FIZZLEFIRE = 0x1B
+SPECIALEFFECT_FIZZLENATURE = 0x1C
+SPECIALEFFECT_FIZZLEFROST = 0x1D
+SPECIALEFFECT_FIZZLESHADOW = 0x1E
+SPECIALEFFECT_COMBATBLOODSPURTGREENFRONT = 0x1F
+SPECIALEFFECT_COMBATBLOODSPURTGREENFRONTLARGE = 0x20
+SPECIALEFFECT_COMBATBLOODSPURTGREENBACK = 0x21
+SPECIALEFFECT_COMBATBLOODSPURTGREENBACKLARGE = 0x22
+SPECIALEFFECT_FOOTSTEPSPRAYWATER = 0x23
+SPECIALEFFECT_FOOTSTEPSPRAYWATERWALK = 0x24
+SPECIALEFFECT_CHARACTERSHAPESHIFT = 0x25
+SPECIALEFFECT_COMBATBLOODSPURTBLACKFRONT = 0x26
+SPECIALEFFECT_COMBATBLOODSPURTBLACKFRONTLARGE = 0x27
+SPECIALEFFECT_COMBATBLOODSPURTBLACKBACK = 0x28
+SPECIALEFFECT_COMBATBLOODSPURTBLACKBACKLARGE = 0x29
+SPECIALEFFECT_RES_EFFECT = 0x2A
+NUM_UNITEFFECTSPECIALS = 0x2B
+SPECIALEFFECT_NONE = 0xFFFFFFFF
+
+UNITEFFECTATTACHPPOINT:
+UNITEFFECT_ATTACHBASE = 0x0
+UNITEFFECT_ATTACHHEAD = 0x1
+UNITEFFECT_ATTACHLEFTHAND = 0x2
+UNITEFFECT_ATTACHRIGHTHAND = 0x3
+UNITEFFECT_ATTACHNONE = 0x4
+UNITEFFECT_ATTACHBREATH = 0x5
+UNITEFFECT_ATTACHCHEST = 0x6
+UNITEFFECT_ATTACHSPECIAL1 = 0x7
+UNITEFFECT_ATTACHSPECIAL2 = 0x8
+UNITEFFECT_ATTACHSPECIAL3 = 0x9
+UNITEFFECT_ATTACHCHESTBLOODBACK = 0xA
+UNITEFFECT_ATTACHCHESTBLOODFRONT = 0xB
+NUM_UNITEFFECTATTACHPOINTS = 0xC
+UNITEFFECT_INVALID = 0xFFFFFFFF","- The Spell Visual System is intrinsically linked to the M2 model format, as it references M2 files for spell visuals, missiles, and impacts.
+- It connects to the sound system via `SoundEntries.dbc` to play sounds associated with spell visuals.
+- Camera effects are triggered through `SpellEffectCameraShakes.dbc`.
+- The system is configured through a series of interconnected DBC files, primarily `SpellVisual.dbc`, `SpellVisualKit.dbc`, and `SpellVisualEffectName.dbc`.","WDBXEditor: A communal program to edit DBC, DB2, WDB, ADB and DBCache files.
+SpellWork: A tool for spell-related DBC editing.
+WoW Database Editor: A modular database editor for TrinityCore-based servers.","```c
+struct SpellVisualRec {
+    uint32_t m_ID;
+    uint32_t m_precastKit; // The visual effect used for the casting
+    uint32_t m_castKit; // The visual effect used for the cast where the spell occurs
+    uint32_t m_impactKit; // The visual effect used for the target
+    uint32_t m_stateKit; // The visual effect that can be seen while this buff/debuff remains on the target
+    uint32_t m_stateDoneKit;
+    uint32_t m_channelKit; // The visual effect used while channeling a spell
+    uint32_t m_hasMissile; // Boolean
+    uint32_t m_missileModel; // The visual effect used for the spell missile
+    uint32_t m_missilePathType;
+    uint32_t m_missileDestinationAttachment;
+    uint32_t m_missileSound;
+    uint32_t m_animEventSoundID;
+    uint32_t m_flags; // The visual effect used at the center of an AOE spell probably used for other things as well
+    uint32_t m_casterImpactKit;
+    uint32_t m_targetImpactKit; // Previous documentation had swapped this with m_flags.
+    uint32_t m_missileAttachment;
+    uint32_t m_missileFollowGroundHeight;
+    uint32_t m_missileFollowGroundDropSpeed;
+    uint32_t m_missileFollowGroundApproach;
+    uint32_t m_missileFollowGroundFlags;
+    uint32_t m_missileMotion;
+    uint32_t m_missileTargetingKit;
+    uint32_t m_instantAreaKit;
+    uint32_t m_impactAreaKit;
+    uint32_t m_persistentAreaKit; // The visual effect for AOE spells
+    float m_missileCastOffset[3];
+    float m_missileImpactOffset[3];
+};
+```","https://wowdev.wiki/DB/SpellVisualKit
+https://wowdev.wiki/DB/SpellVisualEffectName
+https://wowdev.wiki/DB/SpellVisual",/home/ubuntu/detailed_findings/8_xgUVdxhq2vS6HMmz7rLyOH_1769897281006_na1fn_L2hvbWUvdWJ1bnR1L2RldGFpbGVkX2ZpbmRpbmdz.md,
+"Character Customization System - Research character creation including: CharSections DBC, CharacterFacialHairStyles, CharHairGeosets, CreatureDisplayInfo, race/gender model variations, skin colors, face options, hair styles",Character Customization System,"The character customization system in World of Warcraft 3.3.5a is primarily managed through a series of DBC files. These files define everything from skin and hair color to facial hair and geosets, and are interconnected to create the final character model. Key files include CharSections.dbc, CharacterFacialHairStyles.dbc, CharHairGeosets.dbc, and CreatureDisplayInfo.dbc, which work together to control the visual appearance of characters and NPCs.","```cpp
+struct CharSectionsRec {
+  uint32_t m_ID;
+  uint32_t m_raceID;
+  uint32_t m_sexID;
+  uint32_t m_baseSection;
+  uint32_t m_variationIndex;
+  uint32_t m_colorIndex;
+  stringref m_TextureName[3];
+  uint32_t m_flags;
+};
+
+struct CharacterFacialHairStylesRec {
+  uint32_t m_RaceID;
+  uint32_t m_SexID;
+  uint32_t m_VariationID;
+  uint32_t m_BeardGeoset;
+  uint32_t m_MoustacheGeoset;
+  uint32_t m_SideburnGeoset;
+  uint32_t otherGeosets[3];
+};
+
+struct CharHairGeosetsRec {
+  uint32_t m_ID;
+  uint32_t m_RaceID;
+  uint32_t m_SexID;
+  uint32_t m_VariationID;
+  uint32_t m_GeosetID;
+  uint32_t m_Showscalp;
+};
+
+struct CreatureDisplayInfoRec {
+  uint32_t m_ID;
+  uint32_t m_modelID;
+  uint32_t m_soundID;
+  uint32_t m_extendedDisplayInfoID;
+  float m_creatureModelScale;
+  uint32_t m_creatureModelAlpha;
+  stringref m_textureVariation[3];
+  uint32_t m_sizeClass;
+  uint32_t m_bloodID;
+  uint32_t m_NPCSoundID;
+};
+
+struct CreatureDisplayInfoExtraRec {
+  uint32_t m_ID;
+  uint32_t m_DisplayRaceID;
+  uint32_t m_DisplaySexID;
+  uint32_t m_SkinID;
+  uint32_t m_FaceID;
+  uint32_t m_HairStyleID;
+  uint32_t m_HairColorID;
+  uint32_t m_FacialHairID;
+  uint32_t m_NPCItemDisplay[10];
+  uint32_t m_flags;
+  stringref m_BakeName;
+};
+```","CharSections.dbc Flags:
+Playable/CharacterCreate = 0x1
+Barbershop = 0x2
+Death Knight texture = 0x4
+NPC skin = 0x8
+Regular skin = 0x10
+Silhouette texture = 0x100
+
+CharacterFacialHairStyles.dbc Geoset Groups:
+Chin Hair (Night Elves) = group 1
+Mustache (Night Elves) = group 2
+Eyebrows (Night Elves) = group 3
+Geoset Group 16 = group 16
+Small/Big Ears (Blood Elves) = group 17
+
+CreatureDisplayInfo.dbc Opacity:
+Min Opacity = 0
+Max Opacity = 255","*   **CreatureDisplayInfo.dbc** links to **CreatureDisplayInfoExtra.dbc** to provide detailed customization for character-based models.
+*   **CreatureDisplayInfoExtra.dbc** references several other DBCs to define specific features:
+    *   **ChrRaces.dbc** for the character's race.
+    *   **CharSections.dbc** for skin, face, and hair color textures.
+    *   **CharHairGeosets.dbc** for hair styles.
+    *   **CharacterFacialHairStyles.dbc** for facial hair styles.
+    *   **ItemDisplayInfo.dbc** for equipped items like helms and shoulders.
+*   **CharSections.dbc** defines the texture variations for different character features, categorized by `GeneralType` (skin, face, hair, etc.).
+*   **CharHairGeosets.dbc** connects hair styles to specific 3D model geosets.
+*   **CharacterFacialHairStyles.dbc** defines the different facial hair combinations by referencing geosets.","DBCUtil: A command-line tool for converting DBC files to and from CSV format.
+Taliis: A GUI-based DBC editor.
+Ladik's MPQ Editor: A tool for opening and extracting files from MPQ archives.
+WoW Model Viewer: A tool for viewing and animating World of Warcraft models, which can be used to visualize character customizations.","```cpp
+struct CharHairGeosetsRec {
+  uint32_t m_ID;
+  uint32_t m_RaceID;
+  uint32_t m_SexID;
+  uint32_t m_VariationID;
+  uint32_t m_GeosetID;
+  uint32_t m_Showscalp;
+};
+```","https://wowdev.wiki/DB/CharSections
+https://wowdev.wiki/DB/CharacterFacialHairStyles
+https://wowdev.wiki/DB/CharHairGeosets
+https://wowdev.wiki/DB/CreatureDisplayInfo
+https://wowdev.wiki/DB/CreatureDisplayInfoExtra",/home/ubuntu/detailed_findings/9_dycjJFfRRBSD46jwU62sgS_1769897291651_na1fn_L2hvbWUvdWJ1bnR1L2NoYXJzZWN0aW9uc19yZXNlYXJjaA.md,
+"Mount and Creature Models - Research mount/creature rendering including: CreatureModelData DBC, CreatureDisplayInfo, attachment points for riders, mount animations, creature scaling, model variations",Mount and Creature Models,"This research provides a detailed technical overview of mount and creature models in World of Warcraft 3.3.5a. The investigation covers the structure and fields of the `CreatureModelData.dbc` and `CreatureDisplayInfo.dbc` files, which define model properties, textures, and scaling. Additionally, the M2 model format is examined, with a focus on attachment points that are crucial for correctly positioning riders on mounts.","```c
+// Found in CreatureModelData.dbc
+struct CreatureModelDataRec {
+  uint32_t m_ID; // Unique identifier
+  uint32_t m_flags; // Bitmask of flags for model properties
+  char* m_ModelName; // Path to the M2 model file
+  uint32_t m_sizeClass; // Affects blood splat size and death thud sound
+  float m_modelScale; // Base scale of the model
+  uint32_t m_bloodID; // Foreign key to UnitBloodLevels.dbc
+  uint32_t m_footprintTextureID; // Foreign key to FootprintTextures.dbc
+  float m_footprintTextureLength; // Length of the footprint texture
+  float m_footprintTextureWidth; // Width of the footprint texture
+  float m_footprintParticleScale; // Scale of the footprint particle effect
+  uint32_t m_foleyMaterialID; // ID of the foley material
+  uint32_t m_footstepShakeSize; // Foreign key to CameraShakes.dbc for footstep camera shake
+  uint32_t m_deathThudShakeSize; // Foreign key to CameraShakes.dbc for death thud camera shake
+  uint32_t m_soundID; // Foreign key to CreatureSoundData.dbc
+  float m_collisionWidth; // The width of the model's collision box
+  float m_collisionHeight; // The height of the model's collision box
+  float m_mountHeight; // The height at which a rider is positioned on the mount
+  float m_geoBoxMin[3]; // The minimum coordinates of the model's geometry box
+  float m_geoBoxMax[3]; // The maximum coordinates of the model's geometry box
+  float m_worldEffectScale; // Scale of world effects on the model
+  float m_attachedEffectScale; // Scale of effects attached to the model
+  float m_missileCollisionRadius; // Radius of the missile collision sphere
+  float m_missileCollisionPush; // Push value for missile collision
+  float m_missileCollisionRaise; // Raise value for missile collision
+};
+```
+
+```c
+// Found in CreatureDisplayInfo.dbc
+struct CreatureDisplayInfoRec {
+  uint32_t m_ID; // Unique identifier for the display info
+  uint32_t m_modelID; // Foreign key to CreatureModelData.dbc
+  uint32_t m_soundID; // Foreign key to CreatureSoundData.dbc
+  uint32_t m_extendedDisplayInfoID; // Foreign key to CreatureDisplayInfoExtra.dbc
+  float m_creatureModelScale; // The scale of the creature
+  uint32_t m_creatureModelAlpha; // The opacity of the creature (0-255)
+  char* m_textureVariation[3]; // Paths to alternate textures
+  uint32_t m_sizeClass;
+  uint32_t m_bloodID; // Foreign key to UnitBlood.dbc
+  uint32_t m_NPCSoundID; // Foreign key to NPCSounds.dbc
+};
+```
+
+```c
+// Found in M2 model files
+struct M2Attachment {
+    uint32_t id; // ID of the attachment
+    uint16_t bone; // bone to attach to
+    uint16_t unknown; // always 0
+    float position[3]; // position of the attachment
+    // M2Track<uint8_t> data; // animated attachment data
+};
+```","CreatureModelData.dbc Flags:
+0x00001 = No Footprint Particles
+0x00002 = No Breath Particles
+0x00004 = Is Player Model
+0x00008 = No Attached Weapons
+0x00010 = No Footprint Trail Textures
+0x00020 = Disable Highlight
+0x00040 = Can Mount while Transformed as this
+0x00080 = Disable Scale Interpolation
+0x00100 = Force Projected Tex. (EXPENSIVE)
+0x00200 = Can Jump In Place As Mount
+0x00400 = AI cannot use walk backwards anim
+0x00800 = Ignore SpineLow for SplitBody
+0x01000 = Ignore Head for SplitBody
+0x02000 = Ignore SpineLow for SplitBody when Flying
+0x04000 = Ignore Head for SplitBody when Flying
+0x08000 = Use 'wheel' animation on unit wheel bones
+0x10000 = Is HD Model
+0x20000 = Suppress Emitters on Low Settings","- `CreatureDisplayInfo.dbc` links to `CreatureModelData.dbc` to specify the model for a given display ID.
+- `CreatureModelData.dbc` and `CreatureDisplayInfo.dbc` link to `CreatureSoundData.dbc` for sound information.
+- `CreatureModelData.dbc` links to `UnitBloodLevels.dbc` and `FootprintTextures.dbc`.
+- `CreatureDisplayInfo.dbc` links to `CreatureDisplayInfoExtra.dbc`, `UnitBlood.dbc`, `NPCSounds.dbc`, `ParticleColor.dbc`, and `ObjectEffectPackage.dbc`.
+- The M2 model format contains attachment points which are used to position riders on mounts.","MyDBCEditor: A tool for editing DBC files.
+010 Editor: A hex editor with templates for various file formats, including M2 models.
+WoW Model Viewer (WMV): A tool for viewing and exporting WoW models.","```c
+struct CreatureModelDataRec {
+  uint32_t m_ID;
+  uint32_t m_flags;
+  char* m_ModelName;
+  uint32_t m_sizeClass;
+  float m_modelScale;
+  uint32_t m_bloodID;
+  uint32_t m_footprintTextureID;
+  float m_footprintTextureLength;
+  float m_footprintTextureWidth;
+  float m_footprintParticleScale;
+  uint32_t m_foleyMaterialID;
+  uint32_t m_footstepShakeSize;
+  uint32_t m_deathThudShakeSize;
+  uint32_t m_soundID;
+  float m_collisionWidth;
+  float m_collisionHeight;
+  float m_mountHeight;
+  float m_geoBoxMin[3];
+  float m_geoBoxMax[3];
+  float m_worldEffectScale;
+  float m_attachedEffectScale;
+  float m_missileCollisionRadius;
+  float m_missileCollisionPush;
+  float m_missileCollisionRaise;
+};
+```
+
+```c
+struct CreatureDisplayInfoRec {
+  uint32_t m_ID;
+  uint32_t m_modelID;
+  uint32_t m_soundID;
+  uint32_t m_extendedDisplayInfoID;
+  float m_creatureModelScale;
+  uint32_t m_creatureModelAlpha;
+  char* m_textureVariation[3];
+  uint32_t m_sizeClass;
+  uint32_t m_bloodID;
+  uint32_t m_NPCSoundID;
+};
+```
+
+```c
+struct M2Attachment {
+    uint32_t id;
+    uint16_t bone;
+    uint16_t unknown;
+    float position[3];
+    // M2Track<uint8_t> data; // animated attachment data
+};
+```","https://wowdev.wiki/DB/CreatureModelData
+https://wowdev.wiki/DB/CreatureDisplayInfo
+https://wowdev.wiki/M2",/home/ubuntu/detailed_findings/10_cb4AfVIyjN2Cxsqo6PJmaJ_1769897247235_na1fn_L2hvbWUvdWJ1bnR1L2RldGFpbGVkX2ZpbmRpbmdz.md,
+"Item Display System - Research item rendering including: ItemDisplayInfo DBC, helmet/shoulder geosets, weapon attachment points, item visual effects, enchant visuals, how items modify character models",Item Display System,"The Item Display System in World of Warcraft 3.3.5a is a complex and data-driven system responsible for rendering items on characters and in the game world. It relies on a combination of DBC files, primarily ItemDisplayInfo.dbc, and model data in M2 and .skin formats to control everything from an item's appearance and icon to its visual effects and how it modifies a character's geometry. This system uses geosets to dynamically alter character models based on equipped armor, with a hardcoded priority system to resolve conflicts between different items. Weapon effects and enchantments are handled through a system of attachment points on the M2 models, linked to visual effect definitions in other DBC files.","```c
+struct ItemDisplayInfoRec {
+  uint32_t  m_ID;
+  char*     m_leftModelPath;
+  char*     m_rightModelPath;
+  char*     m_leftModelTexturePath;
+  char*     m_rightModelTexturePath;
+  char*     m_icon1;
+  char*     m_icon2;
+  uint32_t  m_geosetGroup[3];
+  uint32_t  m_flags; // &1: EmblazonedTabard, &2: hides underwear, &4: event specific
+  uint32_t  m_spellVisualID;
+  uint32_t  m_groupSoundIndex; // foreign key to ItemGroupSounds.dbc
+  uint32_t  m_helmetGeosetVisMale; // foreign key to HelmetGeosetVisData.dbc
+  uint32_t  m_helmetGeosetVisFemale; // foreign key to HelmetGeosetVisData.dbc
+  char*     m_upperArmTexture;
+  char*     m_lowerArmTexture;
+  char*     m_handsTexture;
+  char*     m_upperTorsoTexture;
+  char*     m_lowerTorsoTexture;
+  char*     m_upperLegTexture;
+  char*     m_lowerLegTexture;
+  char*     m_footTexture;
+  uint32_t  m_itemVisual; // foreign key to ItemVisuals.dbc
+  uint32_t  m_particleColorID; // foreign key to ParticleColor.dbc
+};
+
+struct M2SkinProfile {
+  uint32_t                magic;         // 'SKIN'
+  M2Array<unsigned short> vertices;
+  M2Array<unsigned short> indices;
+  M2Array<ubyte4>         bones;
+  M2Array<M2SkinSection>  submeshes;
+  M2Array<M2Batch>        batches;
+  uint32_t                boneCountMax;
+  M2Array<M2ShadowBatch>  shadow_batches;
+};
+```","ItemDisplayInfo.dbc Flags:
+EmblazonedTabard = 0x1
+hides_underwear = 0x2
+event_specific = 0x4
+
+Geoset Groups:
+Head_geosetGroup_0 = 2700
+Head_geosetGroup_1 = 2101
+Shoulder_geosetGroup_0 = 2601
+Shirt_geosetGroup_0 = 801
+Shirt_geosetGroup_1 = 1001
+Chest_geosetGroup_0 = 801
+Chest_geosetGroup_1 = 1001
+Chest_geosetGroup_2 = 1301
+Chest_geosetGroup_3 = 2201
+Chest_geosetGroup_4 = 2801
+Waist_geosetGroup_0 = 1801
+Pants_geosetGroup_0 = 1101
+Pants_geosetGroup_1 = 901
+Pants_geosetGroup_2 = 1301
+Boots_geosetGroup_0 = 501
+Boots_geosetGroup_1 = 2000
+Gloves_geosetGroup_0 = 401
+Gloves_geosetGroup_1 = 2301
+Cape_geosetGroup_0 = 1501
+Tabard_geosetGroup_0 = 1201","- ItemDisplayInfo.dbc is the central file, linking to models, textures, and other DBC files.
+- M2 files define the 3D models for items, including their geometry, animations, and attachment points.
+- .skin files define the different levels of detail (LODs) for a model and how textures are applied.
+- ItemVisuals.dbc links visual effects to the attachment points on a weapon model.
+- ItemVisualEffects.dbc defines the models used for visual effects.
+- SpellVisual.dbc defines the visual appearance of spells and some enchantment effects.
+- HelmetGeosetVisData.dbc controls the visibility of helmet geosets.
+- ItemGroupSounds.dbc defines the sounds that items make.
+- ParticleColor.dbc defines the colors of particles used in visual effects.","DBC Editor: For viewing and editing DBC files like ItemDisplayInfo.dbc.
+WoW Model Viewer: For viewing M2 models and their animations.
+M2/Skin file editors: For modifying the 3D models and their textures.","```c
+// Pseudocode for geoset priority
+function resolve_geosets(gloves, chest, shirt, belt, tabard, pants, boots) {
+  // Sleeve geoset
+  if (gloves.geosetGroup[0] != 0) {
+    apply_geoset(gloves.geosetGroup[0]);
+  } else if (chest.geosetGroup[0] != 0) {
+    apply_geoset(chest.geosetGroup[0]);
+  } else {
+    apply_geoset(shirt.geosetGroup[0]);
+  }
+
+  // Belt/Tabard geoset
+  if (belt.geosetGroup[0] != 0) {
+    apply_geoset(belt.geosetGroup[0]);
+  } else {
+    apply_geoset(tabard.geosetGroup[0]);
+  }
+
+  // Robe/Pants/Boots geoset
+  if (chest.geosetGroup[2] != 0) {
+    apply_geoset(chest.geosetGroup[2]);
+  } else if (pants.geosetGroup[2] != 0) {
+    apply_geoset(pants.geosetGroup[2]);
+  } else if (boots.geosetGroup[0] != 0) {
+    apply_geoset(boots.geosetGroup[0]);
+  } else {
+    apply_geoset(pants.geosetGroup[1]);
+  }
+}
+```","https://wowdev.wiki/DB/ItemDisplayInfo
+https://wowdev.wiki/M2
+https://wowdev.wiki/M2/.skin",/home/ubuntu/detailed_findings/11_KaHiM2yX8UnkMbj8F8wTqz_1769897305140_na1fn_L2hvbWUvdWJ1bnR1L2ZpbmFsX3JlcG9ydA.md,
+"Navigation and Pathfinding - Research server-side navigation including: vmaps (visibility maps), mmaps (movement maps), height maps, line of sight calculation, pathfinding algorithms used",WoW 3.3.5a Server-Side Navigation and Pathfinding,"Server-side navigation in World of Warcraft 3.3.5a is a complex system that relies on a combination of data structures to enable realistic NPC movement. The system uses MAPs for basic terrain data, VMAPs for line of sight and collision, and MMAPs to generate navigation meshes for pathfinding. The pathfinding itself is powered by the Recast and Detour libraries, which use the A* algorithm to find optimal paths on the generated navmeshes.",No specific C-style struct definitions were found in the researched documentation. The information available describes the general data structures and file formats at a high level.,No specific constants or flags were found during the research.,"*   VMAPs and MMAPs are generated from the base MAP data (ADT/WDT files).
+*   WMO and M2 models are used in VMAP generation for collision.
+*   The pathfinding system is used by the server's AI to control NPC movement.","mapextractor.exe: Extracts map data from the game's MPQ files.
+vmap4extractor.exe: Extracts VMAP data.
+vmap4assembler.exe: Assembles the extracted VMAP data.
+mmaps_generator.exe: Generates MMAPs from the extracted map and VMAP data.
+Recast Debug: A tool for visualizing and debugging the generated navmeshes.","```cpp
+// Pseudocode for pathfinding with Recast/Detour
+
+// 1. Load navmesh
+dtNavMesh* navMesh = loadNavMesh(""path/to/navmesh.mmap"");
+
+// 2. Create navmesh query
+dtNavMeshQuery* navQuery = new dtNavMeshQuery();
+navQuery->init(navMesh, 2048);
+
+// 3. Define start and end points
+float startPos[3] = {x1, y1, z1};
+float endPos[3] = {x2, y2, z2};
+
+// 4. Find path
+dtQueryFilter filter;
+dtPolyRef startRef, endRef;
+float nearestPt[3];
+navQuery->findNearestPoly(startPos, extents, &filter, &startRef, nearestPt);
+navQuery->findNearestPoly(endPos, extents, &filter, &endRef, nearestPt);
+
+dtPolyRef path[MAX_PATH_POLYS];
+int pathCount;
+navQuery->findPath(startRef, endRef, startPos, endPos, &filter, path, &pathCount, MAX_PATH_POLYS);
+```","https://www.getmangos.eu/forums/topic/10829-what-are-maps-mmaps-and-vmaps-exactly/
+https://github.com/stoneharry/mmaps-for-custom-maps
+https://drewkestell.us/Article/6/Chapter/20",/home/ubuntu/detailed_findings/12_VSXtnd4HpPCLgGE0pZorYy_1769897279876_na1fn_L2hvbWUvdWJ1bnR1L2RldGFpbGVkX2ZpbmRpbmdz.md,
+"Sound and Music System - Research audio including: SoundEntries DBC, ZoneMusic DBC, ambient sounds, sound kit system, music triggers, audio file formats used (.wav, .mp3, .ogg)",WoW 3.3.5a Sound and Music System,"This document details the technical aspects of the sound and music system in World of Warcraft patch 3.3.5a. It covers the structure of the `SoundEntries.dbc` and `ZoneMusic.dbc` files, which are central to how the game handles audio. The document also outlines the various sound types, flags, and their relationships, providing a comprehensive overview for developers looking to work with WoW's audio on a technical level.","### SoundEntries.dbc
+
+```c
+struct SoundEntriesRec {
+  uint32_t m_ID;
+  uint32_t m_soundType;
+  stringref m_name;
+  stringref m_File[10];
+  uint32_t m_Freq[10];
+  stringref m_DirectoryBase;
+  float m_volumeFloat;
+  uint32_t m_flags;
+  float m_minDistance;
+  float m_maxDistance;
+  float m_distanceCutoff;
+  uint32_t m_soundEntriesAdvancedID;
+};
+```
+
+### ZoneMusic.dbc
+
+```c
+enum AMBIENCE {
+  AMB_DAY = 0,
+  AMB_NIGHT = 1,
+  NUM_AMBIENCES = 2,
+};
+
+struct ZoneMusicRec {
+  uint32_t m_ID;
+  stringref m_SetName;
+  uint32_t m_SilenceIntervalMin[NUM_AMBIENCES];
+  uint32_t m_SilenceIntervalMax[NUM_AMBIENCES];
+  foreign_key<uint32_t, &SoundEntriesRec::m_ID> m_Sounds[NUM_AMBIENCES];
+};
+```","### Sound Types
+
+| Value | Meaning |
+| --- | --- |
+| 1 | Spells |
+| 2 | UI |
+| 3 | Footsteps |
+| 4 | Combat Impacts |
+| 6 | Combat Swings |
+| 7 | Greetings |
+| 8 | Casting |
+| 9 | Pick Up/Put Down |
+| 10 | NPC Combat |
+| 12 | Errors |
+| 13 | Birds |
+| 14 | Doodad Sounds |
+| 16 | Death Thud Sounds |
+| 17 | NPC Sounds |
+| 18 | Test/Temporary |
+| 19 | Foley Sounds (NOT EDITABLE) |
+| 20 | Footsteps(Splashes) |
+| 21 | CharacterSplashSounds |
+| 22 | WaterVolume Sounds |
+| 23 | Tradeskill Sounds |
+| 24 | Terrain Emitter Sounds |
+| 25 | Game Object Sounds |
+| 26 | SpellFizzles |
+| 27 | CreatureLoops |
+| 28 | Zone Music Files |
+| 29 | Character Macro Lines |
+| 30 | Cinematic Music |
+| 31 | Cinematic Voice |
+| 50 | Zone Ambience |
+| 52 | Sound Emitters |
+| 53 | Vehicle States |
+
+### SoundInterfaceFlags
+
+```c
+enum SoundInterfaceFlags
+{
+   UNUSED        = 0x0001,
+   NO_DUPLICATES = 0x0020,
+   LOOPING       = 0x0200,
+   VARY_PITCH    = 0x0400,
+   VARY_VOLUME   = 0x0800,
+}
+```","*   **ZoneMusic.dbc to SoundEntries.dbc**: The `ZoneMusic.dbc` file links to `SoundEntries.dbc` to determine which music to play in a specific zone. The `m_Sounds` field in `ZoneMusicRec` is a foreign key to the `m_ID` field in `SoundEntriesRec`.
+*   **SoundEntries.dbc to Audio Files**: The `SoundEntries.dbc` file points to the actual audio files (.wav, .mp3) to be played. The `m_DirectoryBase` and `m_File` fields are combined to create the full path to the sound file.","DBC Editors: Various DBC editors can be used to view and edit the contents of `SoundEntries.dbc` and `ZoneMusic.dbc`.
+MPQ Editors: MPQ editors are necessary to extract the DBC files and other game assets from the game's data archives.","```lua
+/script PlaySoundFile(""Sound\\Creature\\AmbassadorHellmaw\\Auch_Helmaw_Slay02.wav"")
+```","https://wowdev.wiki/DB/SoundEntries
+https://wowdev.wiki/DB/ZoneMusic
+https://github.com/fondlez/wow-sounds",/home/ubuntu/detailed_findings/13_FsUQm7nF2Abc1oSonKikTq_1769897289035_na1fn_L2hvbWUvdWJ1bnR1L3Jlc2VhcmNoL2RldGFpbGVkX2ZpbmRpbmdz.md,
+"WoW Modding Tools - Research existing tools including: Noggit (terrain editor), WoW Model Viewer, MPQ editors (Ladik's), BLP converters, DBC editors, 010 Editor templates, MyDBCEditor",WoW Modding Tools,"This research provides a technical overview of essential modding tools for World of Warcraft 3.3.5a. It covers the structure of DBC, BLP, and M2 file formats, and details the features of key tools like Noggit, WoW Model Viewer, MPQ editors, BLP converters, DBC editors, and 010 Editor templates. The findings include struct definitions, enums, and relationships between the various tools and formats, offering a foundational resource for developing AI-native applications for WoW 3.3.5a.","struct dbc_header
+{
+  uint32_t magic; // always 'WDBC'
+  uint32_t record_count; // records per file
+  uint32_t field_count; // fields per record
+  uint32_t record_size; // sum (sizeof (field_type_i)) | 0 <= i < field_count. field_type_i is NOT defined in the files.
+  uint32_t string_block_size;
+};
+
+template<typename record_type>
+struct dbc_file
+{
+  dbc_header header;
+  record_type records[header.record_count];
+  char string_block[header.string_block_size];
+};
+
+struct BLPHeader {
+  uint32_t magic; // 'BLP2'
+  uint32_t formatVersion; // must be 1
+  BLPColorEncoding colorEncoding;
+  uint8_t alphaChannelBitDepth; // 0, 1, 8, 4
+  BLPPixelFormat preferredFormat;
+  mipmap_level_and_flag_type mipmap_level_and_flags;
+  uint32_t width;
+  uint32_t height;
+#define MIPMAP_COUNT 16
+#define PALETTE_SIZE 256
+  uint32_t dataOffsets[MIPMAP_COUNT];
+  uint32_t dataSizes[MIPMAP_COUNT];
+  uint32_t palette[PALETTE_SIZE];
+};
+
+struct M2Header
+{
+  uint32_t magic;              // ""MD20""
+  uint32_t version;
+  M2Array<char> name;
+  struct
+  {
+    uint32_t flag_tilt_x : 1;
+    uint32_t flag_tilt_y : 1;
+    uint32_t : 1;
+    uint32_t flag_use_texture_combiner_combos : 1;
+    uint32_t : 1;
+    uint32_t flag_load_phys_data : 1;
+    uint32_t : 1;
+    uint32_t flag_unk_0x80 : 1;
+    uint32_t flag_camera_related : 1;
+    uint32_t flag_new_particle_record : 1;
+    uint32_t flag_unk_0x400 : 1;
+    uint32_t flag_texture_transforms_use_bone_sequences : 1;
+    uint32_t flag_unk_0x1000 : 1;
+    uint32_t ChunkedAnimFiles_0x2000 : 1;
+    uint32_t flag_unk_0x4000 : 1;
+    uint32_t flag_unk_0x8000 : 1;
+    uint32_t flag_unk_0x10000 : 1;
+    uint32_t flag_unk_0x20000 : 1;
+    uint32_t flag_unk_0x40000 : 1;
+    uint32_t flag_unk_0x80000 : 1;
+    uint32_t flag_unk_0x100000 : 1;
+    uint32_t flag_unk_0x200000 : 1;
+    uint32_t flag_unk_0x40000000 : 1;
+  } global_flags;
+  M2Array<M2Loop> global_loops;
+  M2Array<M2Sequence> sequences;
+  M2Array<uint16_t> sequenceIdxHashById;
+  M2Array<M2CompBone> bones;
+  M2Array<uint16_t> boneIndicesById;
+  M2Array<M2Vertex> vertices;
+  uint32_t num_skin_profiles;
+  M2Array<M2Color> colors;
+  M2Array<M2Texture> textures;
+  M2Array<M2TextureWeight> texture_weights;
+  M2Array<M2TextureTransform> texture_transforms;
+  M2Array<uint16_t> textureIndicesById;
+  M2Array<M2Material> materials;
+  M2Array<uint16_t> boneCombos;
+  M2Array<uint16_t> textureCombos;
+  M2Array<uint16_t> textureCoordCombos;
+  M2Array<uint16_t> textureWeightCombos;
+  M2Array<uint16_t> textureTransformCombos;
+  CAaBox bounding_box;
+  float bounding_sphere_radius;
+  CAaBox collision_box;
+  float collision_sphere_radius;
+  M2Array<uint16_t> collisionIndices;
+  M2Array<C3Vector> collisionPositions;
+  M2Array<C3Vector> collisionFaceNormals;
+  M2Array<M2Attachment> attachments;
+  M2Array<uint16_t> attachmentIndicesById;
+  M2Array<M2Event> events;
+  M2Array<M2Light> lights;
+  M2Array<M2Camera> cameras;
+  M2Array<uint16_t> cameraIndicesById;
+  M2Array<M2Ribbon> ribbon_emitters;
+  M2Array<M2Particle> particle_emitters;
+};","BLPColorEncoding:
+COLOR_JPEG = 0
+COLOR_PALETTE = 1
+COLOR_DXT = 2
+COLOR_ARGB8888 = 3
+COLOR_ARGB8888_dup = 4
+
+BLPPixelFormat:
+PIXEL_DXT1 = 0
+PIXEL_DXT3 = 1
+PIXEL_ARGB8888 = 2
+PIXEL_ARGB1555 = 3
+PIXEL_ARGB4444 = 4
+PIXEL_RGB565 = 5
+PIXEL_A8 = 6
+PIXEL_DXT5 = 7
+PIXEL_UNSPECIFIED = 8
+PIXEL_ARGB2565 = 9
+PIXEL_BC5 = 11
+NUM_PIXEL_FORMATS = 12
+
+mipmap_level_and_flag_type:
+MIPS_NONE = 0x0
+MIPS_GENERATED = 0x1
+MIPS_HANDMADE = 0x2
+flags_mipmap_mask = 0xF
+flags_unk_0x10 = 0x10","- Noggit is a terrain editor that modifies ADT files, which define the terrain geometry, and WDT files, which describe the map.
+- WoW Model Viewer is used to view M2 (models) and WMO (world map objects) files. It relies on the game's MPQ archives to access the necessary files.
+- MPQ editors, like Ladik's MPQ Editor, are used to open and extract files from the game's MPQ archives, which contain all the game assets.
+- BLP converters are used to convert BLP (texture) files to and from other formats like PNG. These textures are used by M2 and WMO models.
+- DBC editors, like WDBX Editor, are used to edit DBC (database client) files, which contain game data for items, spells, NPCs, and more.
+- 010 Editor, with appropriate templates, can be used to parse and edit various WoW file formats, including M2 files.","Noggit: A terrain editor for World of Warcraft.
+WoW Model Viewer (WMVx): A tool for viewing and capturing model and character animation from World of Warcraft.
+Ladik's MPQ Editor: An editor for MPQ archives.
+BLPConverter: A tool to convert BLP files to and from other image formats.
+WDBX Editor: A DBC editor for WotLK and other WoW versions.
+010 Editor: A hex editor with support for binary templates, which can be used to parse various WoW file formats.
+MyDBCEditor: Another DBC editor.","```c
+struct dbc_header
+{
+  uint32_t magic; // always 'WDBC'
+  uint32_t record_count; // records per file
+  uint32_t field_count; // fields per record
+  uint32_t record_size; // sum (sizeof (field_type_i)) | 0 <= i < field_count. field_type_i is NOT defined in the files.
+  uint32_t string_block_size;
+};
+
+template<typename record_type>
+struct dbc_file
+{
+  dbc_header header;
+  record_type records[header.record_count];
+  char string_block[header.string_block_size];
+};
+```
+
+```c
+struct BLPHeader {
+  uint32_t magic; // 'BLP2'
+  uint32_t formatVersion; // must be 1
+  BLPColorEncoding colorEncoding;
+  uint8_t alphaChannelBitDepth; // 0, 1, 8, 4
+  BLPPixelFormat preferredFormat;
+  mipmap_level_and_flag_type mipmap_level_and_flags;
+  uint32_t width;
+  uint32_t height;
+#define MIPMAP_COUNT 16
+#define PALETTE_SIZE 256
+  uint32_t dataOffsets[MIPMAP_COUNT];
+  uint32_t dataSizes[MIPMAP_COUNT];
+  uint32_t palette[PALETTE_SIZE];
+};
+```
+
+```c
+struct M2Header
+{
+  uint32_t magic;              // ""MD20""
+  uint32_t version;
+  M2Array<char> name;
+  struct
+  {
+    uint32_t flag_tilt_x : 1;
+    uint32_t flag_tilt_y : 1;
+    uint32_t : 1;
+    uint32_t flag_use_texture_combiner_combos : 1;
+    uint32_t : 1;
+    uint32_t flag_load_phys_data : 1;
+    uint32_t : 1;
+    uint32_t flag_unk_0x80 : 1;
+    uint32_t flag_camera_related : 1;
+    uint32_t flag_new_particle_record : 1;
+    uint32_t flag_unk_0x400 : 1;
+    uint32_t flag_texture_transforms_use_bone_sequences : 1;
+    uint32_t flag_unk_0x1000 : 1;
+    uint32_t ChunkedAnimFiles_0x2000 : 1;
+    uint32_t flag_unk_0x4000 : 1;
+    uint32_t flag_unk_0x8000 : 1;
+    uint32_t flag_unk_0x10000 : 1;
+    uint32_t flag_unk_0x20000 : 1;
+    uint32_t flag_unk_0x40000 : 1;
+    uint32_t flag_unk_0x80000 : 1;
+    uint32_t flag_unk_0x100000 : 1;
+    uint32_t flag_unk_0x200000 : 1;
+    uint32_t flag_unk_0x40000000 : 1;
+  } global_flags;
+  M2Array<M2Loop> global_loops;
+  M2Array<M2Sequence> sequences;
+  M2Array<uint16_t> sequenceIdxHashById;
+  M2Array<M2CompBone> bones;
+  M2Array<uint16_t> boneIndicesById;
+  M2Array<M2Vertex> vertices;
+  uint32_t num_skin_profiles;
+  M2Array<M2Color> colors;
+  M2Array<M2Texture> textures;
+  M2Array<M2TextureWeight> texture_weights;
+  M2Array<M2TextureTransform> texture_transforms;
+  M2Array<uint16_t> textureIndicesById;
+  M2Array<M2Material> materials;
+  M2Array<uint16_t> boneCombos;
+  M2Array<uint16_t> textureCombos;
+  M2Array<uint16_t> textureCoordCombos;
+  M2Array<uint16_t> textureWeightCombos;
+  M2Array<uint16_t> textureTransformCombos;
+  CAaBox bounding_box;
+  float bounding_sphere_radius;
+  CAaBox collision_box;
+  float collision_sphere_radius;
+  M2Array<uint16_t> collisionIndices;
+  M2Array<C3Vector> collisionPositions;
+  M2Array<C3Vector> collisionFaceNormals;
+  M2Array<M2Attachment> attachments;
+  M2Array<uint16_t> attachmentIndicesById;
+  M2Array<M2Event> events;
+  M2Array<M2Light> lights;
+  M2Array<M2Camera> cameras;
+  M2Array<uint16_t> cameraIndicesById;
+  M2Array<M2Ribbon> ribbon_emitters;
+  M2Array<M2Particle> particle_emitters;
+};
+```","https://github.com/wowdev/noggit3
+https://wowdev.wiki/Main_Page
+https://wowdev.wiki/DBC
+https://github.com/Frostshake/WMVx
+http://www.zezula.net/en/mpq/download.html
+https://wowdev.wiki/BLP
+https://github.com/WowDevTools/WDBXEditor
+https://www.sweetscape.com/010editor/repository/templates/
+https://www.sweetscape.com/010editor/repository/templates/file_info.php?file=M2.bt&type=0&sort=
+https://wowdev.wiki/M2",/home/ubuntu/detailed_findings/14_LeZmPLxVyxyZsSDZQ8Nipw_1769897402794_na1fn_L2hvbWUvdWJ1bnR1L3Jlc2VhcmNoX2ZpbmRpbmdz.md,
+"Client Memory and Offsets - Research WoW 3.3.5a 12340 client including: known memory offsets, object manager structure, player/unit structures, spell casting offsets, commonly used patterns",Client Memory and Offsets in WoW 3.3.5a,"This research provides a comprehensive overview of the memory layout of the World of Warcraft 3.3.5a client (build 12340). It includes detailed information on memory offsets, the structure of the Object Manager, and various data structures for players, units, and other game objects. The findings are based on information gathered from community forums and open-source projects, providing a solid foundation for developing AI-native applications that interact with the game client.","```c
+// Object Fields
+struct ObjectFields {
+    uint64_t guid;              // 0x00
+    uint32_t type;              // 0x08
+    uint32_t entry;             // 0x0C
+    float    scale_x;           // 0x10
+    uint32_t padding;           // 0x14
+};
+
+// Item Fields
+struct ItemFields {
+    uint64_t owner;             // 0x18
+    uint64_t contained;         // 0x20
+    uint64_t creator;           // 0x28
+    uint64_t giftcreator;       // 0x30
+    uint32_t stack_count;       // 0x38
+    uint32_t duration;          // 0x3C
+    uint32_t spell_charges[5];  // 0x40
+    uint32_t flags;             // 0x54
+    uint32_t enchantments[12][2]; // 0x58
+    uint32_t property_seed;     // 0xE8
+    uint32_t random_properties_id; // 0xEC
+    uint32_t durability;        // 0xF0
+    uint32_t max_durability;    // 0xF4
+    uint32_t create_played_time; // 0xF8
+    uint32_t pad;               // 0xFC
+};
+
+// Unit Fields
+struct UnitFields {
+    uint64_t charm;             // 0x18
+    uint64_t summon;            // 0x20
+    uint64_t critter;           // 0x28
+    uint64_t charmed_by;        // 0x30
+    uint64_t summoned_by;       // 0x38
+    uint64_t created_by;        // 0x40
+    uint64_t target;            // 0x48
+    uint64_t channel_object;    // 0x50
+    uint32_t channel_spell;     // 0x58
+    uint32_t bytes_0;           // 0x5C
+    uint32_t health;            // 0x60
+    uint32_t power[7];          // 0x64
+    uint32_t max_health;        // 0x80
+    uint32_t max_power[7];      // 0x84
+    uint32_t level;             // 0xD8
+    // ... and so on
+};
+```","LUA_GETTOP = 0x0084DBD0
+LUA_SETTOP = 0x0084DBF0
+LUA_PUSHSTRING = 0x0084E350
+LUA_PUSHINTEGER = 0x0084E2D0
+LUA_PCALL = 0x0084EC50
+CURMGR_OFFSET = 0x00B41414
+CURMGR_PTR_OFFSET = 0x24
+NEXT_OBJECT_OFFSET = 0x3C
+OBJECT_TYPE_OFFSET = 0x14","* The **Object Manager** is the central hub for all in-game objects. It maintains a linked list of objects, which can be traversed to access individual players, units, and game objects.
+*   Each object in the Object Manager has a **GUID** (Globally Unique Identifier) that uniquely identifies it.
+*   Player and unit objects have a **UnitFields** structure that contains detailed information about their stats, such as health, mana, and level.
+*   The client's **Lua engine** can be manipulated to execute scripts and interact with the game world programmatically.","Cheat Engine: A memory scanner and debugger that can be used to find memory addresses and pointers.
+ReClass.NET: A tool for reverse engineering class structures from memory.
+OllyDbg, x64dbg, WinDbg: Various debuggers for analyzing the game client's code and memory.","```python
+# Get Player Object: Read pointer at (WoW.exe + CURMGR_OFFSET), then read pointer at (result + CURMGR_PTR_OFFSET)
+# Iterate Object Manager: Start with first object, then follow NEXT_OBJECT_OFFSET until it's 0 or loops.
+# Get Unit Health: (Unit_Object_Base + UNIT_HEALTH)
+```
+
+```csharp
+public void Ping()
+{
+    // ... (code to read player data)
+}
+```","https://www.ownedcore.com/forums/world-of-warcraft/world-of-warcraft-bots-programs/wow-memory-editing/298984-3-3-5a-12340-offsets-3.html
+https://github.com/AzDeltaQQ/WotLKRotations
+https://wowdev.wiki/ObjectManager
+https://www.unknowncheats.me/forum/world-of-warcraft/370439-3-3-5a-adress-offset-dump-question-warmane.html
+https://github.com/johnmoore/WoW-Object-Manager",/home/ubuntu/detailed_findings/15_nM89OLOEaghTvXk8zaOIjP_1769897378092_na1fn_L2hvbWUvdWJ1bnR1L2RldGFpbGVkX2ZpbmRpbmdz.md,
+"Lua AddOn API 3.3.5a - Research the complete Lua API including: all global functions, frame types, events, widget methods, secure templates, protected functions, XML schema",Lua AddOn API 3.3.5a,"The World of Warcraft 3.3.5a Lua AddOn API provides a comprehensive set of functions, events, and widgets for creating custom user interface modifications. The API includes a wide range of global functions for interacting with the game world, a detailed event system for responding to game events, and a flexible widget system for creating UI elements. The API also includes a secure template and protected function system for performing restricted actions in a secure manner.",Not applicable to the Lua AddOn API.,"ExpansionLevel:
+0 = WoW
+1 = The Burning Crusade
+2 = Wrath of the Lich King
+3 = Cataclysm
+4 = Mists of Pandaria
+5 = Warlords of Draenor
+6 = Legion
+7 = Battle for Azeroth
+8 = Shadowlands","* The Lua API is used to create addons that can interact with and modify the World of Warcraft user interface.
+* The XML schema is used to define the structure and layout of UI elements, which can then be manipulated by Lua scripts.
+* Secure Templates and Protected Functions are used to provide a secure way for addons to perform actions that are normally restricted, such as casting spells or using items.",WoW UI Designer: A visual tool for creating and editing WoW UI XML files.,"```xml
+<Ui xmlns=""http://www.blizzard.com/wow/ui/"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xsi:schemaLocation=""http://www.blizzard.com/wow/ui/ ..\\FrameXML\\UI.xsd"">
+	<Frame name=""MyAddonFrame"">  <!-- a sample widget -->
+		<!-- sample properties and children -->
+		<Scripts>   
+			<OnLoad function=""MyAddonFrame_OnLoad"" />
+		</Scripts>
+		<Layers>
+			<Layer level=""ARTWORK"">
+				<Texture name=""MyAddonFrameTexture"" />
+			</Layer>
+		</Layers>
+	</Frame>  <!-- end of sample widget -->
+</Ui>
+```","https://wowwiki-archive.fandom.com/wiki/World_of_Warcraft_API
+https://wowwiki-archive.fandom.com/wiki/Events_A-Z_(full_list)
+https://wowwiki-archive.fandom.com/wiki/Widget_API
+https://wowwiki-archive.fandom.com/wiki/SecureTemplates
+https://wowwiki-archive.fandom.com/wiki/Category:World_of_Warcraft_API/Protected_Functions
+https://warcraft.wiki.gg/wiki/XML_user_interface",/home/ubuntu/detailed_findings/16_6tYvOjHHBAsjrFCPfkSZfh_1769897623703_na1fn_L2hvbWUvdWJ1bnR1L3dvd19hcGlfZmluZGluZ3M.md,
+"Network Protocol Basics - Research client-server protocol including: packet structure, common opcodes, authentication flow, world packet format, compression",WoW 3.3.5a Network Protocol Basics,"The World of Warcraft 3.3.5a network protocol is a client-server protocol that uses TCP for communication. It has a distinct authentication flow and world packet format. Packet headers are encrypted using a session key, and the structure of the packets differs between client-to-server and server-to-client communication.","/* Server-to-Client Packet Header */
+struct SMSG_Header {
+    uint16 size; // Big-endian, 2 or 3 bytes depending on a flag
+    uint16 opcode; // Little-endian
+};
+
+/* Client-to-Server Packet Header */
+struct CMSG_Header {
+    uint16 size; // Big-endian
+    uint32 opcode; // Little-endian
+};
+
+/* Structure to hold context for a WoW network conversation */
+struct WowwContext {
+    guint expectedSize;     // Expected size of the next packet
+    guint32 lastNum;        // Last frame number
+    guint32 packet_counter; // Number of packets seen in the conversation
+};","WOWW_DEFAULT_PORT = 8085
+
+// A flag in the first byte of the server packet header indicates a 3-byte size
+SMSG_SIZE_3_BYTE_FLAG = 0x80","- The client first connects to the authentication server (default port 3724) to authenticate and get a realm list.
+- After selecting a realm, the client disconnects from the authentication server and connects to the world server (default port 8085) for gameplay.
+- The session key negotiated with the authentication server is used to encrypt/decrypt world packets.","Wireshark: A network protocol analyzer that can be used with a custom dissector to parse WoW packets.
+Cheat Engine: Used to extract the RC4 session keys from the game client's memory.","```c
+// Pseudocode for decrypting and parsing a server-to-client packet
+
+function parse_server_packet(packet_data) {
+  // The first packet (SMSG_AUTH_CHALLENGE) is not encrypted
+  if (is_first_packet) {
+    header = packet_data.read(4);
+  } else {
+    encrypted_header = packet_data.read(4);
+    decrypted_header = rc4_decrypt(encrypted_header);
+    header = decrypted_header;
+  }
+
+  // Check for 3-byte size encoding
+  if (header[0] & 0x80) {
+    size = ((header[0] & 0x7F) << 16) | (header[1] << 8) | header[2];
+    opcode = (header[3] << 8) | header[4];
+    payload = packet_data.read(size - 2);
+  } else {
+    size = (header[0] << 8) | header[1];
+    opcode = (header[2] << 8) | header[3];
+    payload = packet_data.read(size - 2);
+  }
+
+  return {size, opcode, payload};
+}
+```","https://wowdev.wiki/World_Packet
+https://wowdev.wiki/Login_Packet
+https://github.com/chaodhib/Wow-wireshark-dissector",/home/ubuntu/detailed_findings/17_CHaNYbMnSXN4nj2TJa79uD_1769897360670_na1fn_L2hvbWUvdWJ1bnR1L3Jlc2VhcmNoX25vdGVz.md,
+"Procedural Content Generation for WoW - Research existing procedural generation approaches including: terrain generation algorithms, dungeon generation, how to programmatically create valid ADT/WDT files",Procedural Content Generation for WoW 3.3.5a,"This research provides a detailed analysis of the technical specifications for procedural content generation in World of Warcraft 3.3.5a, focusing on terrain generation through WDT and ADT files. The investigation concludes that there is no evidence of procedural dungeon generation in this version of the game, with dungeons and raids being manually constructed using WMO and ADT files.","```c
+// WDT MPHD Chunk
+struct SMMapHeader {
+   uint32_t flags; // Flags for the map
+   uint32_t something; // Used in WotLK to initialize MAIN chunk data
+   uint32_t unused[6]; // Unused padding
+};
+
+// WDT MAIN Chunk
+struct SMAreaInfo {
+  uint32_t Flag_HasADT : 1; // Indicates if this tile has an ADT file
+  uint32_t Flag_AllWater : 1; // Indicates if the tile is all water
+  uint32_t Flag_Loaded : 1; // Client-side flag
+  uint32_t asyncId;    // Client-side async ID
+};
+
+// WDT MODF Chunk
+struct SMMapObjDef {
+  uint nameId; // Unused
+  uint uniqueId; // Unused
+  float pos[3]; // Position of the WMO
+  float rot[3]; // Rotation of the WMO
+  float extents_upper[3]; // Upper corner of the bounding box
+  float extents_lower[3]; // Lower corner of the bounding box
+  uint16 flags; // WMO flags
+  uint16 doodadSet; // Doodad set index
+  uint16 nameSet; // Name set index
+  uint16 pad; // Padding
+};
+
+// ADT MVER Chunk
+struct MVER {
+  uint32_t version; // File version (18 for 3.3.5a)
+};
+
+// ADT MHDR Chunk
+struct SMMapHeader {
+  uint32_t flags; // Header flags
+  uint32_t mcin;      // Offset to MCIN chunk
+  uint32_t mtex;      // Offset to MTEX chunk
+  uint32_t mmdx;      // Offset to MMDX chunk
+  uint32_t mmid;      // Offset to MMID chunk
+  uint32_t mwmo;      // Offset to MWMO chunk
+  uint32_t mwid;      // Offset to MWID chunk
+  uint32_t mddf;      // Offset to MDDF chunk
+  uint32_t modf;      // Offset to MODF chunk
+  uint32_t mfbo;      // Offset to MFBO chunk
+  uint32_t mh2o;      // Offset to MH2O chunk
+  uint32_t mtxf;      // Offset to MTXF chunk
+  uint8_t mamp_value; // Added in Cata+
+  uint8_t padding[3]; // Padding
+  uint32_t unused[3]; // Unused padding
+};
+
+// ADT MCIN Chunk
+struct SMChunkInfo {
+  uint32_t offset;    // Absolute offset to the MCNK chunk
+  uint32_t size;      // Size of the MCNK chunk
+  uint32_t flags;     // Client-side flags
+  uint32_t asyncId;   // Client-side async ID
+} mcin[256];
+
+// ADT MDDF Chunk
+struct SMDoodadDef {
+    uint32_t nameId;        // Index into the MMID chunk
+    uint32_t uniqueId;      // Unique ID for this doodad
+    float pos[3]; // Position of the doodad
+    float rot[3]; // Rotation of the doodad
+    uint16_t scale; // Scale of the doodad
+    uint16_t flags; // Doodad flags
+};
+
+// ADT MCNK Chunk
+struct MCNK {
+    uint32_t flags; // Chunk flags
+    uint32_t indexX; // X index of the chunk
+    uint32_t indexY; // Y index of the chunk
+    uint32_t nLayers; // Number of texture layers
+    uint32_t nDoodadRefs; // Number of doodad references
+    uint32_t ofsMCVT;     // Offset to MCVT sub-chunk (height map)
+    uint32_t ofsMCNR;     // Offset to MCNR sub-chunk (normals)
+    uint32_t ofsMCLY;     // Offset to MCLY sub-chunk (texture layers)
+    uint32_t ofsMCRF;     // Offset to MCRF sub-chunk (doodad references)
+    uint32_t ofsMCAL;     // Offset to MCAL sub-chunk (alpha maps)
+    uint32_t sizeAlpha; // Size of the alpha map data
+    uint32_t ofsMCSH;     // Offset to MCSH sub-chunk (shadow map)
+    uint32_t sizeShadow; // Size of the shadow map data
+    uint32_t areaid; // Area ID
+    uint32_t nMapObjRefs; // Number of WMO references
+    uint32_t holes; // Terrain holes bitmask
+    uint16_t ReallyLowQualityTextureingMap[8]; // Low-quality texture map
+    uint32_t predTex; // Predicted texture
+    uint32_t nEffectDoodad; // Number of effect doodads
+    uint32_t ofsMCSE;     // Offset to MCSE sub-chunk (sound emitters)
+    uint32_t nSndEmitters; // Number of sound emitters
+    uint32_t ofsMCLQ;     // Offset to MCLQ sub-chunk (liquid data)
+    uint32_t sizeLiquid; // Size of the liquid data
+    float  zpos; // Z position of the chunk
+    float  xpos; // X position of the chunk
+    float  ypos; // Y position of the chunk
+    uint32_t textureId;   // Texture ID
+    uint32_t props;       // Properties
+    uint32_t effectId;    // Effect ID
+};
+
+// ADT MH2O Chunk
+struct MH2O_Header {
+    uint32_t ofsInformation; // Offset to information block
+    uint32_t layerCount;     // Number of liquid layers
+    uint32_t ofsData;        // Offset to data block
+};
+
+struct MH2O_Information {
+    uint16_t liquidType; // Type of liquid
+    uint16_t flags; // Liquid flags
+    float heightLevel1; // First height level
+    float heightLevel2; // Second height level
+    uint8_t xOffset; // X offset of the liquid quad
+    uint8_t yOffset; // Y offset of the liquid quad
+    uint8_t width; // Width of the liquid quad
+    uint8_t height; // Height of the liquid quad
+    uint32_t ofsBitmap; // Offset to existence bitmap
+    uint32_t ofsVertexData; // Offset to vertex data
+};
+```","MPHD Flags:
+wdt_uses_global_map_obj = 0x1
+adt_has_mccv = 0x2
+adt_has_big_alpha = 0x4
+adt_has_doodadrefs_sorted_by_size_cat = 0x8
+FLAG_LIGHTINGVERTICES = 0x10
+adt_has_upside_down_ground = 0x20","- WDT files act as a container or index for ADT files, defining the overall map layout.
+- ADT files contain the actual terrain data, including heightmaps, textures, and references to WMOs and M2 models.
+- WMO (World Map Object) files are used for large structures and buildings within the game world, and are placed within ADTs.
+- M2 files are used for smaller models, such as characters, creatures, and doodads, and are also placed within ADTs.","Noggit: A popular map editor for WotLK that allows for graphical editing of ADT and WDT files.
+AdtTools: A C# framework for programmatically manipulating ADT files.
+wow-adt and wow-wdt: Rust crates for parsing and manipulating ADT and WDT files.
+010 Editor: A hex editor with templates for various WoW file formats, including ADT and WDT.","```c
+// WDT MPHD Chunk
+struct SMMapHeader {
+   uint32_t flags;
+   uint32_t something;
+   uint32_t unused[6];
+};
+
+// WDT MAIN Chunk
+struct SMAreaInfo {
+  uint32_t Flag_HasADT : 1;
+  uint32_t Flag_AllWater : 1;
+  uint32_t Flag_Loaded : 1;
+  uint32_t asyncId;
+};
+
+// WDT MODF Chunk
+struct SMMapObjDef {
+  uint nameId;
+  uint uniqueId;
+  float pos[3];
+  float rot[3];
+  float extents_upper[3];
+  float extents_lower[3];
+  uint16 flags;
+  uint16 doodadSet;
+  uint16 nameSet;
+  uint16 pad;
+};
+
+// ADT MVER Chunk
+struct MVER {
+  uint32_t version;
+};
+
+// ADT MHDR Chunk
+struct SMMapHeader {
+  uint32_t flags;
+  uint32_t mcin;
+  uint32_t mtex;
+  uint32_t mmdx;
+  uint32_t mmid;
+  uint32_t mwmo;
+  uint32_t mwid;
+  uint32_t mddf;
+  uint32_t modf;
+  uint32_t mfbo;
+  uint32_t mh2o;
+  uint32_t mtxf;
+  uint8_t mamp_value;
+  uint8_t padding[3];
+  uint32_t unused[3];
+};
+
+// ADT MCIN Chunk
+struct SMChunkInfo {
+  uint32_t offset;
+  uint32_t size;
+  uint32_t flags;
+  uint32_t asyncId;
+} mcin[256];
+
+// ADT MDDF Chunk
+struct SMDoodadDef {
+    uint32_t nameId;
+    uint32_t uniqueId;
+    float pos[3];
+    float rot[3];
+    uint16_t scale;
+    uint16_t flags;
+};
+
+// ADT MODF Chunk
+struct SMMapObjDef {
+    uint32_t nameId;
+    uint32_t uniqueId;
+    float pos[3];
+    float rot[3];
+    float extents_upper[3];
+    float extents_lower[3];
+    uint16_t flags;
+    uint16_t doodadSet;
+    uint16_t nameSet;
+    uint16_t pad;
+};
+
+// ADT MCNK Chunk
+struct MCNK {
+    uint32_t flags;
+    uint32_t indexX;
+    uint32_t indexY;
+    uint32_t nLayers;
+    uint32_t nDoodadRefs;
+    uint32_t ofsMCVT;
+    uint32_t ofsMCNR;
+    uint32_t ofsMCLY;
+    uint32_t ofsMCRF;
+    uint32_t ofsMCAL;
+    uint32_t sizeAlpha;
+    uint32_t ofsMCSH;
+    uint32_t sizeShadow;
+    uint32_t areaid;
+    uint32_t nMapObjRefs;
+    uint32_t holes;
+    uint16_t ReallyLowQualityTextureingMap[8];
+    uint32_t predTex;
+    uint32_t nEffectDoodad;
+    uint32_t ofsMCSE;
+    uint32_t nSndEmitters;
+    uint32_t ofsMCLQ;
+    uint32_t sizeLiquid;
+    float  zpos;
+    float  xpos;
+    float  ypos;
+    uint32_t textureId;
+    uint32_t props;
+    uint32_t effectId;
+};
+
+// ADT MH2O Chunk
+struct MH2O_Header {
+    uint32_t ofsInformation;
+    uint32_t layerCount;
+    uint32_t ofsData;
+};
+
+struct MH2O_Information {
+    uint16_t liquidType;
+    uint16_t flags;
+    float heightLevel1;
+    float heightLevel2;
+    uint8_t xOffset;
+    uint8_t yOffset;
+    uint8_t width;
+    uint8_t height;
+    uint32_t ofsBitmap;
+    uint32_t ofsVertexData;
+};
+```","https://wowdev.wiki/WDT
+https://wowdev.wiki/ADT/v18
+https://www.wowhead.com/wotlk/forums/topic/random-dungeon-generator-164679",/home/ubuntu/detailed_findings/18_b6yaF1k7zh1TVwMLDWpbKz_1769897341534_na1fn_L2hvbWUvdWJ1bnR1L2RldGFpbGVkX2ZpbmRpbmdz.md,
+"DB2 and WDB Cache Formats - Research extended database formats including: DB2 header structure, WDB cache files, differences from DBC, client cache system",DB2 and WDB Cache Formats,"This research covers the technical specifications of DB2 and WDB file formats in World of Warcraft, focusing on version 3.3.5a. DB2 files, which succeeded the DBC format, are detailed with their header structure, although they are more prevalent in post-WotLK clients. WDB files, used for caching server data, are described with their 24-byte header structure for version 3.3.5a, along with various file signatures.","```c
+struct db2_header
+{
+  uint32_t magic;                                               // 'WDB2'
+  uint32_t record_count;
+  uint32_t field_count;                                         // array fields count as the size of array for WDB2
+  uint32_t record_size;
+  uint32_t string_table_size;                                   // string block almost always contains at least one zero-byte
+  uint32_t table_hash;
+  uint32_t build;
+  uint32_t timestamp_last_written;                              // set to time(0); when writing in WowClientDB2_Base::Save()
+  uint32_t min_id;
+  uint32_t max_id;
+  uint32_t locale;                                              // as seen in TextWowEnum
+  uint32_t copy_table_size;                                     // always zero in WDB2 (?) - see WDB3 for information on how to parse this
+};
+```
+
+```c
+struct wdb_header_335a
+{
+  char      signature[4];      // Identifier for the WDB file type (e.g., 'WMOB', 'WGOB')
+  uint32_t  client_version;    // Client build version
+  char      client_locale[4];  // Client locale (e.g., 'enUS')
+  uint32_t  record_size;       // Size of each record in the file
+  uint32_t  record_version;    // A manually updated versioning field
+  uint32_t  cache_version;     // A packet based versioning field set via SMSG_CLIENTCACHE_VERSION
+};
+```","WDB File Signatures:
+CreatureCache.wdb = WMOB
+GameObjectCache.wdb = WGOB
+ItemCache.wdb = WIDB
+ItemNameCache.wdb = WNDB
+ItemTextCache.wdb = WITX
+NPCCache.wdb = WNPC
+PageTextCache.wdb = WPTX
+QuestCache.wdb = WQST","- DB2 is the successor to the DBC file format, used for client-side databases.
+- WDB files are client-side caches of data sent from the server, which helps to reduce network traffic.
+- Both DB2 and WDB files have a header structure followed by data records.",WDBX Editor: A DBC/DB2/Cache editor designed to work for all client versions.,"```c
+struct db2_header
+{
+  uint32_t magic;                                               // 'WDB2'
+  uint32_t record_count;
+  uint32_t field_count;                                         // array fields count as the size of array for WDB2
+  uint32_t record_size;
+  uint32_t string_table_size;                                   // string block almost always contains at least one zero-byte
+  uint32_t table_hash;
+  uint32_t build;
+  uint32_t timestamp_last_written;                              // set to time(0); when writing in WowClientDB2_Base::Save()
+  uint32_t min_id;
+  uint32_t max_id;
+  uint32_t locale;                                              // as seen in TextWowEnum
+  uint32_t copy_table_size;                                     // always zero in WDB2 (?) - see WDB3 for information on how to parse this
+};
+```
+
+```c
+struct wdb_header_335a
+{
+  char      signature[4];      // Identifier for the WDB file type (e.g., 'WMOB', 'WGOB')
+  uint32_t  client_version;    // Client build version
+  char      client_locale[4];  // Client locale (e.g., 'enUS')
+  uint32_t  record_size;       // Size of each record in the file
+  uint32_t  record_version;    // A manually updated versioning field
+  uint32_t  cache_version;     // A packet based versioning field set via SMSG_CLIENTCACHE_VERSION
+};
+```","https://wowdev.wiki/DB2
+https://wowdev.wiki/WDB",/home/ubuntu/detailed_findings/19_CcDmutKr0kSpGpFhPslj8N_1769897179248_na1fn_L2hvbWUvdWJ1bnR1L2RldGFpbGVkX2ZpbmRpbmdz.md,
